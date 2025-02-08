@@ -21,6 +21,11 @@ const Chess = {
         } else {
           square.classList.add('dark-square');
         }
+
+        const onclickSquare = function() {
+          console.log('clicked', row, col);
+        }
+        square.addEventListener('click', onclickSquare);
       }
     }
   }
