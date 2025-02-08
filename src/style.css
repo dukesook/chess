@@ -1,6 +1,18 @@
-.chess-board {
-  /* display: grid; */
-  background-color: brown;
+.chessboard {
+  display: grid;
+  /* background-color: brown; */
   border: 1px solid black;
   height: 400px;
+  grid-template-columns: repeat(8, 75px);
+  grid-template-rows: repeat(8, 75px);
+  padding: 10px;
 }
+
+.chessboard > div {
+  background-color: gray;
+  border: 1px solid black;
+  text-align: center;
+  padding: 10px;
+  font-size: 30px;
+}
+
