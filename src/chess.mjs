@@ -15,6 +15,8 @@ const Chess = {
         const square = document.createElement('div');
         square.innerHTML = `${row}, ${col}`;
         chessboard.appendChild(square);
+        // Add class to square
+        square.classList.add('board-square');
       }
     }
   }
