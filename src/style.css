@@ -19,3 +19,12 @@
 .chessboard > .board-square:hover {
   background-color: lightgray;
 }
+
+.chessboard > .light-square {
+  background-color: white;
+}
+
+.chessboard > .dark-square {
+  background-color: black;
+  color: white;
+}

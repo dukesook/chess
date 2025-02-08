@@ -15,8 +15,12 @@ const Chess = {
         const square = document.createElement('div');
         square.innerHTML = `${row}, ${col}`;
         chessboard.appendChild(square);
-        // Add class to square
         square.classList.add('board-square');
+        if ((row + col) % 2 === 0) {
+          square.classList.add('light-square');
+        } else {
+          square.classList.add('dark-square');
+        }
       }
     }
   }
