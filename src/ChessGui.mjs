@@ -24,12 +24,17 @@ export const ChessGui = {
           squareHTML.classList.add('dark-square');
         }
 
+        const square = chessBoard.board[row][col];
         const onclickSquare = function() {
-          const square = chessBoard.board[row][col];
           callback(square, squareHTML);
         }
 
         squareHTML.addEventListener('click', onclickSquare);
+
+        if (square.piece) {
+          const shortName = square.piece.get_short_name();
+          squareHTML.innerHTML = shortName;
+        }
       }
     }
   },
