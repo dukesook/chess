@@ -9,6 +9,8 @@ const chessboardHTML = document.getElementById('chessboard');
 const Chess = {
 
   board: null,
+  moving: false, // The play has selected a piece to move, pending a destination square
+  currentSquare: null, // The square with the piece that player has selected to move
 
   init: function() {
     
@@ -25,6 +27,17 @@ const Chess = {
     BoardSquare.must_be(square);
     console.log(square);
     console.log(squareHTML);
+    if (square.piece) {
+      Chess.moving = true;
+      Chess.currentSquare = square;
+    }
+    else {
+      console.log('Empty Square Clicked');
+      if (Chess.moving) {
+        console.log('Move Piece from ', Chess.currentSquare, ' to ', square);
+        Chess.moving = false
+      }
+    }
   }
 
 }
