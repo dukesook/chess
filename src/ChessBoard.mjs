@@ -1,7 +1,6 @@
 import { Pawn, Rook, Bishop, Knight, King, Queen } from './Pieces.mjs';
 
-export default
-class ChessBoard {
+export default class ChessBoard {
   // Declare a 2d array of Board Squares
   board = [];
   constructor() {
@@ -74,7 +73,7 @@ class ChessBoard {
 
 }
 
-class BoardSquare {
+export class BoardSquare {
   piece = null;
   row = null;
   column = null;
@@ -82,5 +81,11 @@ class BoardSquare {
   constructor(row, column) {
     this.row = row;
     this.column = column;
+  }
+
+  static must_be(object) {
+    if (!(object instanceof BoardSquare)) {
+      throw new Error('Must be a BoardSquare');
+    }
   }
 }
