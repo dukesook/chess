@@ -12,9 +12,9 @@ export const ChessGui = {
           square.classList.add('dark-square');
         }
 
-    const onclickSquare = function() {
-      console.log(row, col);
-    }
+        const onclickSquare = function() {
+          console.log(row, col);
+        }
 
         square.addEventListener('click', onclickSquare);
       }
