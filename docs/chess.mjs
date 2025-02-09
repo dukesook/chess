@@ -18,7 +18,7 @@ const Chess = {
     Chess.board.print();
 
     // HTML
-    Gui.displayNewBoard(Chess.board, chessboardHTML, Chess.onclickSquare);
+    Gui.initBoard(Chess.board, chessboardHTML, Chess.onclickSquare);
 
   },
 
@@ -34,7 +34,8 @@ const Chess = {
     else {
       console.log('Empty Square Clicked');
       if (Chess.moving) {
-        console.log('Move Piece from ', Chess.currentSquare, ' to ', square);
+        Chess.movePiece(Chess.currentSquare, square);
+        Chess.currentSquare = null;
         Chess.moving = false
       }
     }
@@ -46,6 +47,16 @@ const Chess = {
     if (!from.piece) {
       throw new Error('No piece to move');
     }
+
+    // Update Controller
+    to.piece = from.piece;
+    from.piece = null;
+
+    // Update View
+    Gui.movePiece(from.container, to.container);
+
+    // Update Model
+    Chess.board.print();
   }
 
 }

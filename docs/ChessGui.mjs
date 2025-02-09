@@ -3,7 +3,7 @@ import { BoardSquare } from './ChessBoard.mjs';
 
 export const ChessGui = {
 
-  displayNewBoard(chessBoard, container, callback) {
+  initBoard(chessBoard, container, callback) {
     ChessBoard.must_be(chessBoard);
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
@@ -55,7 +55,21 @@ export const ChessGui = {
       }
     }
 
+  },
+
+  movePiece(from, to) {
+    must_be_HTMLElement(from);
+    must_be_HTMLElement(to);
+
+    to.innerHTML = from.innerHTML;
+    from.innerHTML = '';
   }
 }
 
 export default ChessGui;
+
+function must_be_HTMLElement(object) {
+  if (!(object instanceof HTMLElement)) {
+    throw new Error('Must be a HTMLElement, but got ' + object);
+  }
+}
