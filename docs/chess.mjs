@@ -27,6 +27,10 @@ const Chess = {
   onclickSquare: function(square) {
     BoardSquare.must_be(square);
 
+    // TODO - move PIECE_COLOR up a level
+    //        Since the controller needs access to it,
+    //        The controller can just create it and pass it down.
+
     const state = Chess.state;
     if (state == State.WHITES_TURN) {
       // White Selected Their Piece to Move
@@ -66,13 +70,43 @@ const Chess = {
     // Success
     Chess.selectedSquare = square;
     Gui.highlightSquare(square);
-    Chess.state = State.WHITE_MOVING;
+    Chess.state = Chess.getNextState();
     console.log('VALID: Moving to WHITE_MOVING state');
 
   },
 
-  handlePlayerMoving: function(square, playerColor) {
-    BoardSquare.must_be(square);
+  getNextState: function() {
+    const state = Chess.state;
+    if (state == State.WHITES_TURN) {
+      return State.WHITE_MOVING;
+    }
+    else if (state == State.WHITE_MOVING) {
+      return State.BLACKS_TURN;
+    }
+    else if (state == State.BLACKS_TURN) {
+      return State.BLACK_MOVING;
+    }
+    else if (state == State.BLACK_MOVING) {
+      return State.WHITES_TURN;
+    }
+  },
+
+  handlePlayerMoving: function(toSquare, playerColor) {
+    const fromSquare = Chess.selectedSquare;
+    BoardSquare.must_be(toSquare);
+    BoardSquare.must_be(fromSquare);
+
+    // You can't move on your own piece
+    if (toSquare.piece.color == playerColor) {
+      console.log('You can\'t move on your own piece');
+      return;
+    }
+
+    // Move
+    Chess.movePiece(fromSquare, toSquare);
+    Gui.unhighlightSquare(fromSquare);
+
+
 
   },
 
