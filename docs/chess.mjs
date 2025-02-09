@@ -43,6 +43,9 @@ const Chess = {
   movePiece: function(from, to) {
     BoardSquare.must_be(from);
     BoardSquare.must_be(to);
+    if (!from.piece) {
+      throw new Error('No piece to move');
+    }
   }
 
 }
