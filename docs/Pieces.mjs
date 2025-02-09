@@ -1,26 +1,44 @@
+const PIECE_COLOR = Object.freeze({
+  WHITE: 'white',
+  BLACK: 'black',
+  must_be: function(object) {
+    if (!Object.values(this).includes(object)) {
+      throw new Error(`Invalid PIECE_COLOR value: ${object}`);
+    }
+  }
+})
+
 export default class PeiceInterface {
   points = null;
   color = null;
-  move() {
-    throw new Error('move() Not Overridden');
-  };
-  get_short_name() {
-    throw new Error('get_short_name() Not Overridden');
-  };
 
   constructor(color) {
+    
+    PIECE_COLOR.must_be(color);
     this.color = color;
+
+
     // Prohibit Abstract class Instantiation
     if (new.target === PeiceInterface) {
       throw new TypeError("Attempting to instantiate Abstract Class: PeiceInterface");
     }
 
-    // Ensure each child class implements the required methods
+    // Validate Children
     const requiredMethods = ['move', 'get_short_name'];
     this._validateImplementation(requiredMethods);
   }
+  
+
+  move() {
+    throw new Error('move() Not Overridden');
+  };
+
+  get_short_name() {
+    throw new Error('get_short_name() Not Overridden');
+  };
 
   _validateImplementation(requiredMethods) {
+    // Ensure each child implements the required methods
     for (const method of requiredMethods) {
       if (typeof this[method] !== 'function') {
         throw new Error(`${this.constructor.name} must implement ${method}()`);

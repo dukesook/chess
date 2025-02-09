@@ -5,18 +5,17 @@ console.log('loading chess.mjs');
 
 const chessboardHTML = document.getElementById('chessboard');
 
-// State Machine
-const State = Object.freeze({
-  WHITES_TURN: 0,
-  WHITE_MOVING: 1,
-  BLACKS_TURN: 2,
-  BLACK_MOVING: 3,
-})
-
 const Chess = {
-  state: new State(),
   board: null,
-  currentSquare: null, // The square with the piece that player has selected to move
+  selectedSquare: null, // The square with the piece that player has selected to move
+  
+  // State Machine
+  state: Object.freeze({
+    WHITES_TURN: 0,
+    WHITE_MOVING: 1,
+    BLACKS_TURN: 2,
+    BLACK_MOVING: 3,
+  }),
 
   init: function() {
     Chess.board = new ChessBoard();
@@ -41,6 +40,11 @@ const Chess = {
 
   handleWhitesTurn: function(square) {
     BoardSquare.must_be(square);
+
+    if (!square.piece) {
+      console.log('You can only select a square with a piece on it');
+      return;
+    }
 
   },
 
