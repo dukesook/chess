@@ -83,6 +83,7 @@ export class BoardSquare {
   piece = null;
   row = null;
   column = null;
+  container = null; // HTML Element
 
   constructor(row, column) {
     this.row = row;

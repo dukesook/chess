@@ -1,30 +1,55 @@
 import ChessBoard from './ChessBoard.mjs';
+import { BoardSquare } from './ChessBoard.mjs';
 
 export const ChessGui = {
 
-  createNewBoard(container) {
+  displayNewBoard(chessBoard, container, callback) {
+    ChessBoard.must_be(chessBoard);
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
-        const square = document.createElement('div');
-        container.appendChild(square);
-        square.classList.add('board-square');
+        const squareHTML = document.createElement('div');
+        container.appendChild(squareHTML);
+
+        // Add Coordinates
+        squareHTML.setAttribute('row', row);
+        squareHTML.setAttribute('column', col);
+
+        // Add Classes
+        squareHTML.classList.add('board-square');
+
+        // Light vs Dark Squares
         if ((row + col) % 2 === 0) {
-          square.classList.add('light-square');
+          squareHTML.classList.add('light-square');
         } else {
-          square.classList.add('dark-square');
+          squareHTML.classList.add('dark-square');
         }
 
         const onclickSquare = function() {
-          console.log(row, col);
+          const square = chessBoard.board[row][col];
+          callback(square, squareHTML);
         }
 
-        square.addEventListener('click', onclickSquare);
+        squareHTML.addEventListener('click', onclickSquare);
       }
     }
   },
 
-  displayBoard(board) {
-    ChessBoard.must_be(board);
+  displayBoard(chessBoard, chessboardHTML) {
+    ChessBoard.must_be(chessBoard);
+    const board = chessBoard.board;
+
+    for (let row = 0; row < 8; row++) {
+      for (let col = 0; col < 8; col++) {
+        const square = board[row][col];
+        BoardSquare.must_be(square);
+        const piece = square.piece;
+        if (piece) {
+          const shortName = piece.get_short_name();
+
+        }
+      }
+    }
+
   }
 }
 

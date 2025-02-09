@@ -3,7 +3,7 @@ import { BoardSquare } from './ChessBoard.mjs';
 import Gui from './ChessGui.mjs';
 console.log('loading chess.mjs');
 
-const chessboard = document.getElementById('chessboard');
+const chessboardHTML = document.getElementById('chessboard');
 
 
 const Chess = {
@@ -11,16 +11,20 @@ const Chess = {
   board: null,
 
   init: function() {
-    // HTML
-    Chess.createBoard();
-
-
+    
     Chess.board = new ChessBoard();
     Chess.board.print();
+
+    // HTML
+    Gui.displayNewBoard(Chess.board, chessboardHTML, Chess.onclickSquare);
+
   },
 
-  createBoard: function() {
-    Gui.createNewBoard(chessboard);
+
+  onclickSquare: function(square, squareHTML) {
+    BoardSquare.must_be(square);
+    console.log(square);
+    console.log(squareHTML);
   }
 
 }
