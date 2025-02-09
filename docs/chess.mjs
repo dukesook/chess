@@ -25,23 +25,42 @@ const Chess = {
 
   onclickSquare: function(square) {
     BoardSquare.must_be(square);
+
+    if (Chess.moving) {
+      Chess.onclickSquareMovingState(square);
+    }
+    else {
+      Chess.onclickSquareInitialState(square);
+    }
+
+  },
+
+  onclickSquareMovingState: function (square) {
+    BoardSquare.must_be(square);
+    
     if (square.piece) {
       Chess.moving = true;
       Chess.currentSquare = square;
     }
-    else {
-      console.log('Empty Square Clicked');
-      if (Chess.moving) {
-        Chess.movePiece(Chess.currentSquare, square);
-        Chess.currentSquare = null;
-        Chess.moving = false
-      }
+
+  },
+
+  onclickSquareInitialState: function (square) {
+    BoardSquare.must_be(square);
+    
+    if (!square.piece) {
+      return; // You have to select a piece to move
     }
+
+    Chess.moving = true;
+    Chess.currentSquare = square;
+
   },
 
   movePiece: function(from, to) {
     BoardSquare.must_be(from);
     BoardSquare.must_be(to);
+
     if (!from.piece) {
       throw new Error('No piece to move');
     }

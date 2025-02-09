@@ -30,3 +30,7 @@
   background-color: black;
   color: white;
 }
+
+.chessboard > .highlight-square {
+  background-color: yellow;
+}

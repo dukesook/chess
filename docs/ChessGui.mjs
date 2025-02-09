@@ -65,6 +65,16 @@ export const ChessGui = {
 
     to.innerHTML = from.innerHTML;
     from.innerHTML = '';
+  },
+
+  highlightSquare(square) {
+    BoardSquare.must_be(square);
+    square.container.classList.add('highlight-square');
+  },
+
+  unhighlightSquare(square) {
+    BoardSquare.must_be(square);
+    square.container.classList.remove('highlight-square');
   }
 }
 
