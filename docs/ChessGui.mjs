@@ -3,7 +3,7 @@ import { BoardSquare } from './ChessBoard.mjs';
 
 export const ChessGui = {
 
-  initBoard(chessBoard, boardElement, callback) {
+  initBoard(chessBoard, boardElement, onclickSquare) {
     ChessBoard.must_be(chessBoard);
     must_be_HTMLElement(boardElement);
 
@@ -28,11 +28,8 @@ export const ChessGui = {
 
         const square = chessBoard.board[row][col];
         square.container = squareElement;
-        const onclickSquare = function() {
-          callback(square, squareElement);
-        }
 
-        squareElement.addEventListener('click', onclickSquare);
+        squareElement.addEventListener('click', () => onclickSquare(square));
 
         if (square.piece) {
           const shortName = square.piece.get_short_name();

@@ -23,10 +23,8 @@ const Chess = {
   },
 
 
-  onclickSquare: function(square, squareElement) {
+  onclickSquare: function(square) {
     BoardSquare.must_be(square);
-    console.log(square);
-    console.log(squareElement);
     if (square.piece) {
       Chess.moving = true;
       Chess.currentSquare = square;
