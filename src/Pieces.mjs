@@ -10,6 +10,22 @@ export default class PeiceInterface {
 
   constructor(color) {
     this.color = color;
+    // Prohibit Abstract class Instantiation
+    if (new.target === PeiceInterface) {
+      throw new TypeError("Attempting to instantiate Abstract Class: PeiceInterface");
+    }
+
+    // Ensure each child class implements the required methods
+    const requiredMethods = ['move', 'get_short_name'];
+    this._validateImplementation(requiredMethods);
+  }
+
+  _validateImplementation(requiredMethods) {
+    for (const method of requiredMethods) {
+      if (typeof this[method] !== 'function') {
+        throw new Error(`${this.constructor.name} must implement ${method}()`);
+      }
+    }
   }
 }
 
