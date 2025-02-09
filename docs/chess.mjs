@@ -29,17 +29,24 @@ const Chess = {
 
     const state = Chess.state;
     if (state == State.WHITES_TURN) {
-      Chess.handleWhitesTurn(square, 'white');
-    } else if (state == State.WHITE_MOVING) {
-      Chess.handleWhiteMoving(square);
-    } else if (state == State.BLACKS_TURN) {
-      Chess.handleBlacksTurn(square);
-    } else if (state == State.BLACK_MOVING) {
-      Chess.handleBlackMoving(square);
+      // White Selected Their Piece to Move
+      Chess.handlePlayersTurn(square, 'white');
+    }
+    else if (state == State.WHITE_MOVING) {
+      // White selected a destination for their piece
+      Chess.handlePlayerMoving(square, 'white');
+    }
+    else if (state == State.BLACKS_TURN) {
+      // Black Selected Their Piece to Move
+      Chess.handlePlayersTurn(square, 'black');
+    }
+    else if (state == State.BLACK_MOVING) {
+      // Black selected a destination for their peice
+      Chess.handlePlayerMoving(square, 'black');
     }
   },
 
-  handleWhitesTurn: function(square, playerColor) {
+  handlePlayersTurn: function(square, playerColor) {
     BoardSquare.must_be(square);
 
     // Select Square with Piece
@@ -64,20 +71,12 @@ const Chess = {
 
   },
 
-  handleWhiteMoving: function(square) {
+  handlePlayerMoving: function(square, playerColor) {
     BoardSquare.must_be(square);
 
   },
 
-  handleBlacksTurn: function(square) {
-    BoardSquare.must_be(square);
 
-  },
-
-  handleBlackMoving: function(square) {
-    BoardSquare.must_be(square);
-
-  },
 
   movePiece: function(from, to) {
     BoardSquare.must_be(from);
