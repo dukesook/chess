@@ -59,6 +59,19 @@ export default class ChessBoard {
     }
   }
 
+  move_piece(from, to) {
+    BoardSquare.must_be(from);
+    BoardSquare.must_be(to);
+    if (!from.piece) {
+      throw new Error('No piece to move');
+    }
+
+    // Update Controller
+    to.piece = from.piece;
+    from.piece = null;
+
+  }
+
   print() {
     let output = '';
     for (let row = 0; row < 8; row++) {

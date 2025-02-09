@@ -46,9 +46,13 @@ const Chess = {
       throw new Error('No piece to move');
     }
 
-    // Update Controller
-    to.piece = from.piece;
-    from.piece = null;
+    // Move
+    try {
+      Chess.board.move_piece(from, to);
+    } catch (e) {
+      console.error(e);
+      return;
+    }
 
     // Update View
     Gui.movePiece(from.container, to.container);
