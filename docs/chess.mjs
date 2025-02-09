@@ -5,55 +5,57 @@ console.log('loading chess.mjs');
 
 const chessboardHTML = document.getElementById('chessboard');
 
+// State Machine
+const State = Object.freeze({
+  WHITES_TURN: 0,
+  WHITE_MOVING: 1,
+  BLACKS_TURN: 2,
+  BLACK_MOVING: 3,
+})
 
 const Chess = {
-
+  state: new State(),
   board: null,
-  moving: false, // The play has selected a piece to move, pending a destination square
   currentSquare: null, // The square with the piece that player has selected to move
 
   init: function() {
-    
     Chess.board = new ChessBoard();
     Chess.board.print();
-
-    // HTML
     Gui.initBoard(Chess.board, chessboardHTML, Chess.onclickSquare);
-
   },
-
 
   onclickSquare: function(square) {
     BoardSquare.must_be(square);
 
-    if (Chess.moving) {
-      Chess.onclickSquareMovingState(square);
+    const state = Chess.state;
+    if (state == State.WHITES_TURN) {
+      Chess.handleWhitesTurn(square);
+    } else if (state == State.WHITE_MOVING) {
+      Chess.handleWhiteMoving(square);
+    } else if (state == State.BLACKS_TURN) {
+      Chess.handleBlacksTurn(square);
+    } else if (state == State.BLACK_MOVING) {
+      Chess.handleBlackMoving(square);
     }
-    else {
-      Chess.onclickSquareInitialState(square);
-    }
+  },
+
+  handleWhitesTurn: function(square) {
+    BoardSquare.must_be(square);
 
   },
 
-  onclickSquareMovingState: function (square) {
+  handleWhiteMoving: function(square) {
     BoardSquare.must_be(square);
-    
-    if (square.piece) {
-      Chess.moving = true;
-      Chess.currentSquare = square;
-    }
 
   },
 
-  onclickSquareInitialState: function (square) {
+  handleBlacksTurn: function(square) {
     BoardSquare.must_be(square);
-    
-    if (!square.piece) {
-      return; // You have to select a piece to move
-    }
 
-    Chess.moving = true;
-    Chess.currentSquare = square;
+  },
+
+  handleBlackMoving: function(square) {
+    BoardSquare.must_be(square);
 
   },
 
@@ -68,16 +70,14 @@ const Chess = {
     // Move
     try {
       Chess.board.move_piece(from, to);
+      Gui.movePiece(from.container, to.container);
     } catch (e) {
       console.error(e);
       return;
     }
 
-    // Update View
-    Gui.movePiece(from.container, to.container);
-
-    // Update Model
     Chess.board.print();
+
   }
 
 }
