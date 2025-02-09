@@ -33,20 +33,16 @@ const Chess = {
 
     const state = Chess.state;
     if (state == State.WHITES_TURN) {
-      // White Selected Their Piece to Move
-      Chess.handlePlayersTurn(square, 'white');
+      Chess.handlePlayersTurn(square, 'white'); // White Selected Their Piece to Move
     }
     else if (state == State.WHITE_MOVING) {
-      // White selected a destination for their piece
-      Chess.handlePlayerMoving(square, 'white');
+      Chess.handlePlayerMoving(square, 'white'); // White selected a destination for their piece
     }
     else if (state == State.BLACKS_TURN) {
-      // Black Selected Their Piece to Move
-      Chess.handlePlayersTurn(square, 'black');
+      Chess.handlePlayersTurn(square, 'black'); // Black Selected Their Piece to Move
     }
     else if (state == State.BLACK_MOVING) {
-      // Black selected a destination for their peice
-      Chess.handlePlayerMoving(square, 'black');
+      Chess.handlePlayerMoving(square, 'black'); // Black selected a destination for their peice
     }
   },
 
@@ -71,7 +67,7 @@ const Chess = {
     Chess.selectedSquare = square;
     Gui.highlightSquare(square);
     Chess.state = Chess.getNextState();
-    console.log('VALID: Moving to WHITE_MOVING state');
+    console.log('VALID: Moving to state', Chess.state);
 
   },
 
