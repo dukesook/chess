@@ -3,39 +3,40 @@ import { BoardSquare } from './ChessBoard.mjs';
 
 export const ChessGui = {
 
-  initBoard(chessBoard, container, callback) {
+  initBoard(chessBoard, boardElement, callback) {
     ChessBoard.must_be(chessBoard);
-    must_be_HTMLElement(container);
+    must_be_HTMLElement(boardElement);
 
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
-        const squareHTML = document.createElement('div');
-        container.appendChild(squareHTML);
+        const squareElement = document.createElement('div');
+        boardElement.appendChild(squareElement);
 
         // Add Coordinates
-        squareHTML.setAttribute('row', row);
-        squareHTML.setAttribute('column', col);
+        squareElement.setAttribute('row', row);
+        squareElement.setAttribute('column', col);
 
         // Add Classes
-        squareHTML.classList.add('board-square');
+        squareElement.classList.add('board-square');
 
         // Light vs Dark Squares
         if ((row + col) % 2 === 0) {
-          squareHTML.classList.add('light-square');
+          squareElement.classList.add('light-square');
         } else {
-          squareHTML.classList.add('dark-square');
+          squareElement.classList.add('dark-square');
         }
 
         const square = chessBoard.board[row][col];
+        square.container = squareElement;
         const onclickSquare = function() {
-          callback(square, squareHTML);
+          callback(square, squareElement);
         }
 
-        squareHTML.addEventListener('click', onclickSquare);
+        squareElement.addEventListener('click', onclickSquare);
 
         if (square.piece) {
           const shortName = square.piece.get_short_name();
-          squareHTML.innerHTML = shortName;
+          squareElement.innerHTML = shortName;
         }
       }
     }
