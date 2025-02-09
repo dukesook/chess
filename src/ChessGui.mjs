@@ -1,6 +1,8 @@
+import ChessBoard from './ChessBoard.mjs';
+
 export const ChessGui = {
 
-  displayNewBoard(container) {
+  createNewBoard(container) {
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
         const square = document.createElement('div');
@@ -19,8 +21,11 @@ export const ChessGui = {
         square.addEventListener('click', onclickSquare);
       }
     }
-
   },
+
+  displayBoard(board) {
+    ChessBoard.must_be(board);
+  }
 }
 
 export default ChessGui;

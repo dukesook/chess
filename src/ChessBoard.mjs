@@ -53,6 +53,12 @@ export default class ChessBoard {
 
   }
 
+  static must_be(object) {
+    if (!(object instanceof ChessBoard)) {
+      throw new Error('Must be a ChessBoard');
+    }
+  }
+
   print() {
     let output = '';
     for (let row = 0; row < 8; row++) {

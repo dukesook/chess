@@ -20,7 +20,7 @@ const Chess = {
   },
 
   createBoard: function() {
-    Gui.displayNewBoard(chessboard);
+    Gui.createNewBoard(chessboard);
   }
 
 }
