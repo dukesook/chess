@@ -29,7 +29,7 @@ const Chess = {
 
     const state = Chess.state;
     if (state == State.WHITES_TURN) {
-      Chess.handleWhitesTurn(square);
+      Chess.handleWhitesTurn(square, 'white');
     } else if (state == State.WHITE_MOVING) {
       Chess.handleWhiteMoving(square);
     } else if (state == State.BLACKS_TURN) {
@@ -39,13 +39,28 @@ const Chess = {
     }
   },
 
-  handleWhitesTurn: function(square) {
+  handleWhitesTurn: function(square, playerColor) {
     BoardSquare.must_be(square);
 
-    if (!square.piece) {
+    // Select Square with Piece
+    const piece = square.piece;
+    if (!piece) {
       console.log('You can only select a square with a piece on it');
       return;
     }
+
+    // Select Team piece
+    const color = piece.color;
+    if (color != playerColor) {
+      console.log('You must select your own pieces');
+      return;
+    }
+
+    // Success
+    Chess.selectedSquare = square;
+    Gui.highlightSquare(square);
+    Chess.state = State.WHITE_MOVING;
+    console.log('VALID: Moving to WHITE_MOVING state');
 
   },
 

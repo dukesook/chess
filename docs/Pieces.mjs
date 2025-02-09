@@ -11,6 +11,8 @@ const PIECE_COLOR = Object.freeze({
 export default class PeiceInterface {
   points = null;
   color = null;
+  WHITE = PIECE_COLOR.WHITE;
+  BLACK = PIECE_COLOR.BLACK;
 
   constructor(color) {
     
