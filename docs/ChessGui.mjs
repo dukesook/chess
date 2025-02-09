@@ -5,6 +5,8 @@ export const ChessGui = {
 
   initBoard(chessBoard, container, callback) {
     ChessBoard.must_be(chessBoard);
+    must_be_HTMLElement(container);
+
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
         const squareHTML = document.createElement('div');
@@ -41,6 +43,8 @@ export const ChessGui = {
 
   displayBoard(chessBoard, chessboardHTML) {
     ChessBoard.must_be(chessBoard);
+    must_be_HTMLElement(chessboardHTML);
+
     const board = chessBoard.board;
 
     for (let row = 0; row < 8; row++) {
