@@ -38,6 +38,11 @@ const Chess = {
         Chess.moving = false
       }
     }
+  },
+
+  movePiece: function(from, to) {
+    BoardSquare.must_be(from);
+    BoardSquare.must_be(to);
   }
 
 }
