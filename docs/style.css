@@ -1,11 +1,9 @@
 .chessboard {
   display: grid;
   /* background-color: brown; */
-  border: 1px solid black;
   height: auto;
   grid-template-columns: repeat(8, 75px);
   grid-template-rows: repeat(8, 75px);
-  padding: 10px;
   align-content: center;
   justify-content: center;
 }
@@ -28,7 +26,6 @@
 
 .chessboard > .dark-square {
   background-color: rgb(184,135,98);
-  color: white;
 }
 
 .chessboard > .highlight-square {
