@@ -18,9 +18,9 @@
   font-size: 30px;
 }
 
-.chessboard > .board-square:hover {
+/* .chessboard > .board-square:hover {
   background-color: lightgray;
-}
+} */
 
 .chessboard > .light-square {
   background-color: white;

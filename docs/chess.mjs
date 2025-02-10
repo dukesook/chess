@@ -46,6 +46,7 @@ const Chess = {
     }
   },
 
+
   handlePlayersTurn: function(square, playerColor) {
     BoardSquare.must_be(square);
 
@@ -71,6 +72,27 @@ const Chess = {
 
   },
 
+
+  handlePlayerMoving: function(toSquare, playerColor) {
+    const fromSquare = Chess.selectedSquare;
+    BoardSquare.must_be(toSquare);
+    BoardSquare.must_be(fromSquare);
+
+    // You can't move on your own piece
+    if (toSquare.peice && toSquare.piece.color == playerColor) {
+      console.log('You can\'t kill your own piece');
+      return;
+    }
+
+    // Move
+    Chess.movePiece(fromSquare, toSquare);
+    Gui.unhighlightSquare(fromSquare);
+    Chess.state = Chess.getNextState();
+
+
+  },
+
+
   getNextState: function() {
     const state = Chess.state;
     if (state == State.WHITES_TURN) {
@@ -86,26 +108,6 @@ const Chess = {
       return State.WHITES_TURN;
     }
   },
-
-  handlePlayerMoving: function(toSquare, playerColor) {
-    const fromSquare = Chess.selectedSquare;
-    BoardSquare.must_be(toSquare);
-    BoardSquare.must_be(fromSquare);
-
-    // You can't move on your own piece
-    if (toSquare.piece.color == playerColor) {
-      console.log('You can\'t move on your own piece');
-      return;
-    }
-
-    // Move
-    Chess.movePiece(fromSquare, toSquare);
-    Gui.unhighlightSquare(fromSquare);
-
-
-
-  },
-
 
 
   movePiece: function(from, to) {
