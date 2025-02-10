@@ -23,11 +23,11 @@
 } */
 
 .chessboard > .light-square {
-  background-color: white;
+  background-color: rgb(237,214,176);
 }
 
 .chessboard > .dark-square {
-  background-color: black;
+  background-color: rgb(184,135,98);
   color: white;
 }
 
