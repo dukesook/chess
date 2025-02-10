@@ -27,7 +27,7 @@ export default class PeiceInterface {
 
     // Validate Children
     const requiredMethods = ['move', 'get_short_name'];
-    this._validateImplementation(requiredMethods);
+    this.must_implement(requiredMethods);
   }
   
 
@@ -39,7 +39,7 @@ export default class PeiceInterface {
     throw new Error('get_short_name() Not Overridden');
   };
 
-  _validateImplementation(requiredMethods) {
+  must_implement(requiredMethods) {
     // Ensure each child implements the required methods
     for (const method of requiredMethods) {
       if (typeof this[method] !== 'function') {
