@@ -1,5 +1,7 @@
 import ChessBoard from './ChessBoard.mjs';
 import { BoardSquare } from './ChessBoard.mjs';
+import { PieceInterface } from './Pieces.mjs'
+
 
 export const ChessGui = {
 
@@ -32,8 +34,11 @@ export const ChessGui = {
         squareElement.addEventListener('click', () => onclickSquare(square));
 
         if (square.piece) {
-          const shortName = square.piece.get_short_name();
-          squareElement.innerHTML = shortName;
+          const color = square.piece.color;
+          const type = square.piece.get_name();
+          const srcElement = ChessGui.createPiece(type, color);
+          srcElement.alt = `${color} ${type}`;
+          squareElement.appendChild(srcElement);
         }
       }
     }
@@ -59,6 +64,12 @@ export const ChessGui = {
 
   },
 
+  createPiece(type, color) {
+    const img = document.createElement('img');
+    img.src = `./images/${color}_${type}.svg`;
+    return img;
+  },
+
   movePiece(from, to) {
     must_be_HTMLElement(from);
     must_be_HTMLElement(to);
@@ -80,8 +91,9 @@ export const ChessGui = {
   addPawn(square) {
     BoardSquare.must_be(square);
     const container = square.container;
-    console.log('Adding Pawn to: ', container);
-    container.innerHTML = 'P';
+    const img = document.createElement('img');
+    img.src = './images/white_pawn.svg';
+    container.appendChild(img);
   }
 }
 

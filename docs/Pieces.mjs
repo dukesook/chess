@@ -26,7 +26,7 @@ export default class PeiceInterface {
     }
 
     // Validate Children
-    const requiredMethods = ['move', 'get_short_name'];
+    const requiredMethods = ['move', 'get_name', 'get_short_name'];
     this.must_implement(requiredMethods);
   }
   
@@ -62,6 +62,10 @@ export class Pawn extends PeiceInterface {
   get_short_name() {
     return 'P';
   }
+
+  get_name() {
+    return 'pawn';
+  }
 }
 
 export class Rook extends PeiceInterface {
@@ -74,6 +78,10 @@ export class Rook extends PeiceInterface {
 
   get_short_name() {
     return 'R';
+  }
+
+  get_name() {
+    return 'rook';
   }
 }
 
@@ -88,6 +96,10 @@ export class Bishop extends PeiceInterface {
   get_short_name() {
     return 'B';
   }
+
+  get_name() {
+    return 'bishop';
+  }
 }
 
 export class Knight extends PeiceInterface {
@@ -100,6 +112,10 @@ export class Knight extends PeiceInterface {
 
   get_short_name() {
     return 'N';
+  }
+
+  get_name() {
+    return 'knight';
   }
 }
 
@@ -114,6 +130,10 @@ export class Queen extends PeiceInterface {
   get_short_name() {
     return 'Q';
   }
+  
+  get_name() {
+    return 'queen';
+  }
 }
 
 export class King extends PeiceInterface {
@@ -126,5 +146,9 @@ export class King extends PeiceInterface {
 
   get_short_name() {
     return 'K';
+  }
+
+  get_name() {
+    return 'king';
   }
 }
