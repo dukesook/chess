@@ -1,6 +1,6 @@
 import ChessBoard from './ChessBoard.mjs';
 import { BoardSquare } from './ChessBoard.mjs';
-import { PieceInterface } from './Pieces.mjs'
+// import { PieceInterface } from './Pieces.mjs'
 
 
 export const ChessGui = {
