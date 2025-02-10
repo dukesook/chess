@@ -75,6 +75,13 @@ export const ChessGui = {
   unhighlightSquare(square) {
     BoardSquare.must_be(square);
     square.container.classList.remove('highlight-square');
+  },
+
+  addPawn(square) {
+    BoardSquare.must_be(square);
+    const container = square.container;
+    console.log('Adding Pawn to: ', container);
+    container.innerHTML = 'P';
   }
 }
 

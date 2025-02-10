@@ -31,6 +31,10 @@ const Chess = {
     //        Since the controller needs access to it,
     //        The controller can just create it and pass it down.
 
+    // TESTING
+    Gui.addPawn(square);
+    // TESTING
+
     const state = Chess.state;
     if (state == State.WHITES_TURN) {
       Chess.handlePlayersTurn(square, 'white'); // White Selected Their Piece to Move
