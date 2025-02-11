@@ -71,6 +71,7 @@ export default class ChessBoard {
     }
 
     // Update Controller
+    from.piece.hasMoved = true;
     to.piece = from.piece;
     from.piece = null;
 

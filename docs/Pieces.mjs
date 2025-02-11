@@ -55,6 +55,7 @@ export default class PeiceInterface {
 
 export class Pawn extends PeiceInterface {
   points = 1;
+  hasMoved = false;
 
   constructor(color) {
     super(color);
@@ -83,10 +84,19 @@ export class Pawn extends PeiceInterface {
       throw new Error('Invalid piece color: ' + this.color);
     }
 
-    // Move Forward
+    // Move Forward 1 Square
     if (from.row + delta == to.row &&
         from.column == to.column &&
-        !to.piece) {
+        !to.piece)
+    {
+      return true;
+    }
+
+    // Move Forward 2 Squares
+    if (from.row + 2*delta == to.row &&
+      from.column == to.column &&
+      !to.piece &&
+      !this.hasMoved) {
       return true;
     }
 
