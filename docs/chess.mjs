@@ -153,17 +153,10 @@ const Chess = {
       throw new Error('No piece to move');
     }
 
-    // Move
-    try {
-      Chess.board.move_piece(from, to);
-      Gui.movePiece(from.container, to.container);
-    } catch (e) {
-      console.error(e);
-      return;
-    }
+    Chess.board.move_piece(from, to); // throws error if invalid
+    Gui.movePiece(from.container, to.container);
 
     Chess.board.print();
-
   }
 
 }
