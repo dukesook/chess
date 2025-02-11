@@ -33,7 +33,11 @@
 }
 
 nav {
-  background-color: black;
-  color: white;
+  background-color: lightgray;
+  color: black;
   min-height: 4em;
+}
+
+#player-turn {
+  font-size: 5em;
 }
