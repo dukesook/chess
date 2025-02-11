@@ -1,5 +1,5 @@
 import ChessBoard from './ChessBoard.mjs';
-import { BoardSquare } from './ChessBoard.mjs';
+import BoardSquare from './BoardSquare.mjs';
 // import { PieceInterface } from './Pieces.mjs'
 
 const playerTurn = document.getElementById('player-turn');

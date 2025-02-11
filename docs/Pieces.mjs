@@ -1,3 +1,6 @@
+import ChessBoard from './ChessBoard.mjs';
+import BoardSquare from './BoardSquare.mjs';
+
 const PIECE_COLOR = Object.freeze({
   WHITE: 'white',
   BLACK: 'black',
@@ -65,7 +68,10 @@ export class Pawn extends PeiceInterface {
   }
 
   isValidMove() {
-    console.log('Pawn Move');
+    if (this.color == PIECE_COLOR.WHITE) {
+
+    }
+
   };
 }
 

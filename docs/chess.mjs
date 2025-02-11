@@ -1,5 +1,5 @@
 import ChessBoard from './ChessBoard.mjs';
-import { BoardSquare } from './ChessBoard.mjs';
+import BoardSquare from './BoardSquare.mjs';
 import Gui from './ChessGui.mjs';
 console.log('loading chess.mjs');
 
