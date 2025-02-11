@@ -26,13 +26,13 @@ export default class PeiceInterface {
     }
 
     // Validate Children
-    const requiredMethods = ['move', 'get_name', 'get_short_name'];
+    const requiredMethods = ['isValidMove', 'get_name', 'get_short_name'];
     this.must_implement(requiredMethods);
   }
   
 
-  move() {
-    throw new Error('move() Not Overridden');
+  isValidMove() {
+    throw new Error('isValidMove() Not Overridden');
   };
 
   get_short_name() {
@@ -51,9 +51,6 @@ export default class PeiceInterface {
 
 export class Pawn extends PeiceInterface {
   points = 1;
-  move() {
-    console.log('Pawn Move');
-  };
 
   constructor(color) {
     super(color);
@@ -66,11 +63,15 @@ export class Pawn extends PeiceInterface {
   get_name() {
     return 'pawn';
   }
+
+  isValidMove() {
+    console.log('Pawn Move');
+  };
 }
 
 export class Rook extends PeiceInterface {
   points = 5;
-  move = () => {};
+  isValidMove = () => {};
 
   constructor(color) {
     super(color);
@@ -87,7 +88,7 @@ export class Rook extends PeiceInterface {
 
 export class Bishop extends PeiceInterface {
   points = 3;
-  move = () => {};
+  isValidMove = () => {};
 
   constructor(color) {
     super(color);
@@ -104,7 +105,7 @@ export class Bishop extends PeiceInterface {
 
 export class Knight extends PeiceInterface {
   points = 3;
-  move = () => {};
+  isValidMove = () => {};
 
   constructor(color) {
     super(color);
@@ -121,7 +122,7 @@ export class Knight extends PeiceInterface {
 
 export class Queen extends PeiceInterface {
   points = 9;
-  move = () => {};
+  isValidMove = () => {};
 
   constructor(color) {
     super(color);
@@ -138,7 +139,7 @@ export class Queen extends PeiceInterface {
 
 export class King extends PeiceInterface {
   points = 0;
-  move = () => {};
+  isValidMove = () => {};
 
   constructor(color) {
     super(color);
