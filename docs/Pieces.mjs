@@ -97,6 +97,9 @@ export class Pawn extends PeiceInterface {
       from.column == to.column &&
       !to.piece &&
       !this.hasMoved) {
+        // TODO - En Passant
+        // TODO - Pawn Promotion
+        // TODO - Check if path is clear
       return true;
     }
 
