@@ -60,10 +60,14 @@ export default class ChessBoard {
   }
 
   move_piece(from, to) {
-    BoardSquare.must_be(from);
+    BoardSquare.must_be(from, 'occupied');
     BoardSquare.must_be(to);
-    if (!from.piece) {
-      throw new Error('No piece to move');
+
+    // Validate Move
+    const piece = from.piece;
+    const isValidMove = piece.isValidMove(this, from, to);
+    if (!isValidMove) {
+      throw new Error('Invalid Move');
     }
 
     // Update Controller

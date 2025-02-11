@@ -1,5 +1,6 @@
 import ChessBoard from './ChessBoard.mjs';
 import BoardSquare from './BoardSquare.mjs';
+import Chess from './chess.mjs';
 
 const PIECE_COLOR = Object.freeze({
   WHITE: 'white',
@@ -67,11 +68,38 @@ export class Pawn extends PeiceInterface {
     return 'pawn';
   }
 
-  isValidMove() {
+  isValidMove(board, from, to) {
+    ChessBoard.must_be(board);
+    BoardSquare.must_be(from, 'occupied');
+    BoardSquare.must_be(to);
+    let delta = null;
     if (this.color == PIECE_COLOR.WHITE) {
-
+      delta = -1;
+    }
+    else if (this.color == PIECE_COLOR.BLACK) {
+      delta = 1;
+    }
+    else {
+      throw new Error('Invalid piece color: ' + this.color);
     }
 
+    // Move Forward
+    if (from.row + delta == to.row &&
+        from.column == to.column &&
+        !to.piece) {
+      return true;
+    }
+
+    // Capture Diagonally
+    if (from.row + delta == to.row &&
+        Math.abs(from.column - to.column) == 1 &&
+        to.piece &&
+        to.piece.color != this.color) {
+      return true;
+    }
+
+    // Invalid Move
+    return false;
   };
 }
 
