@@ -31,9 +31,6 @@ const Chess = {
     //        Since the controller needs access to it,
     //        The controller can just create it and pass it down.
 
-    // TESTING
-    Gui.addPawn(square);
-    // TESTING
 
     const state = Chess.state;
     if (state == State.WHITES_TURN) {
@@ -91,11 +88,29 @@ const Chess = {
     // Move
     Chess.movePiece(fromSquare, toSquare);
     Gui.unhighlightSquare(fromSquare);
-    Chess.state = Chess.getNextState();
+    const nextState = Chess.getNextState();
+    Chess.setState(nextState);
 
 
   },
 
+  setState(state) {
+
+    // TODO: add a Chess.playerTurn variable!
+    Chess.state = state;
+    if (state == State.WHITES_TURN) {
+      Gui.displayPlayersTurn('White');
+    }
+    else if (state == State.WHITE_MOVING) {
+      Gui.displayPlayersTurn('White');
+    }
+    else if (state == State.BLACKS_TURN) {
+      Gui.displayPlayersTurn('Black');
+    }
+    else if (state == State.BLACK_MOVING) {
+      Gui.displayPlayersTurn('Black');
+    }
+  },
 
   getNextState: function() {
     const state = Chess.state;

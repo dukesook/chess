@@ -31,3 +31,9 @@
 .chessboard > .highlight-square {
   background-color: yellow;
 }
+
+nav {
+  background-color: black;
+  color: white;
+  min-height: 4em;
+}

@@ -2,6 +2,7 @@ import ChessBoard from './ChessBoard.mjs';
 import { BoardSquare } from './ChessBoard.mjs';
 // import { PieceInterface } from './Pieces.mjs'
 
+const playerTurn = document.getElementById('player-turn');
 
 export const ChessGui = {
 
@@ -94,6 +95,10 @@ export const ChessGui = {
     const img = document.createElement('img');
     img.src = './images/white_pawn.svg';
     container.appendChild(img);
+  },
+
+  displayPlayersTurn(playerColor) {
+    playerTurn.innerHTML = playerColor;
   }
 }
 
