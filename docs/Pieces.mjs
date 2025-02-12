@@ -51,7 +51,7 @@ export default class PeiceInterface {
     throw new Error('get_short_name() Not Overridden');
   };
 
-  pathIsClear(board, from, to) {
+  static pathIsClear(board, from, to) {
     ChessBoard.must_be(board);
     BoardSquare.must_be(from, 'occupied');
     BoardSquare.must_be(to);
@@ -62,13 +62,14 @@ export default class PeiceInterface {
     const colDirection = Math.sign(colDelta);
     let row = from.row;
     let col = from.column;
-    let largerAbs = Math.max(Math.abs(a), Math.abs(b));
+    let distance = Math.max(Math.abs(rowDelta), Math.abs(colDelta));
     
-    for (let i = 0; i < largerAbs; i++) {
+    for (let i = 0; i < distance-1; i++) {
       row += rowDirection;
       col += colDirection;
       const square = board.board[row][col];
       if (square.piece) {
+        console.error('Path not clear: ' + row + ', ' + col, ' have a ', square.piece.get_name());
         return false;
       }
     }
@@ -164,14 +165,17 @@ export class Rook extends PeiceInterface {
     let valid = false;
 
     if (from.row != to.row && from.column == to.column) {
-      return true; // Move Vertically
+      valid = true; // Move Vertically
     }
     else if (from.row == to.row && from.column != to.column) {
-      return true; // Move Horizontally
+      valid = true; // Move Horizontally
     }
 
-    // Invalid Move
-    return false;
+    if (!PeiceInterface.pathIsClear(board, from, to)) {
+      return false;
+    }
+
+    return valid;
   };
 
 
