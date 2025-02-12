@@ -58,10 +58,21 @@ export default class PeiceInterface {
 
     const rowDelta = to.row - from.row;
     const colDelta = to.column - from.column;
-
-    while (!from.equals(to)) {
-
+    const rowDirection = Math.sign(rowDelta);
+    const colDirection = Math.sign(colDelta);
+    let row = from.row;
+    let col = from.column;
+    let largerAbs = Math.max(Math.abs(a), Math.abs(b));
+    
+    for (let i = 0; i < largerAbs; i++) {
+      row += rowDirection;
+      col += colDirection;
+      const square = board.board[row][col];
+      if (square.piece) {
+        return false;
+      }
     }
+    return true;
   }
 
 }
