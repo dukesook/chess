@@ -257,7 +257,6 @@ export class Knight extends PeiceInterface {
 
 export class Queen extends PeiceInterface {
   points = 9;
-  isValidMove = (board, from, to) => {};
 
   constructor(color) {
     super(color);
@@ -270,6 +269,25 @@ export class Queen extends PeiceInterface {
   get_name() {
     return 'queen';
   }
+
+  isValidMove (board, from, to) {
+    ChessBoard.must_be(board);
+    BoardSquare.must_be(from, 'occupied');
+    BoardSquare.must_be(to);
+
+    if (!PeiceInterface.pathIsClear(board, from, to)) {
+      return false;
+    }
+
+    if (PeiceInterface.isLinearMove(from, to) ||
+        PeiceInterface.isDiagonalMove(from, to)) {
+      return true;
+    }
+
+    // Invalid
+    return false;
+  };
+
 }
 
 export class King extends PeiceInterface {
