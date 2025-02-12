@@ -119,7 +119,6 @@ export class Pawn extends PeiceInterface {
 
 export class Rook extends PeiceInterface {
   points = 5;
-  isValidMove = (board, from, to) => {};
 
   constructor(color) {
     super(color);
@@ -132,6 +131,26 @@ export class Rook extends PeiceInterface {
   get_name() {
     return 'rook';
   }
+
+  isValidMove (board, from, to) {
+    ChessBoard.must_be(board);
+    BoardSquare.must_be(from, 'occupied');
+    BoardSquare.must_be(to);
+
+    let valid = false;
+
+    if (from.row != to.row && from.column == to.column) {
+      return true; // Move Vertically
+    }
+    else if (from.row == to.row && from.column != to.column) {
+      return true; // Move Horizontally
+    }
+
+    // Invalid Move
+    return false;
+  };
+
+
 }
 
 export class Bishop extends PeiceInterface {

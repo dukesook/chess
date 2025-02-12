@@ -63,6 +63,8 @@ export default class ChessBoard {
     BoardSquare.must_be(from, 'occupied');
     BoardSquare.must_be(to);
 
+    // TODO: You can't move to the same square
+
     // Validate Move
     const piece = from.piece;
     const isValidMove = piece.isValidMove(this, from, to);
