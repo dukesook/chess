@@ -119,7 +119,7 @@ export class Pawn extends PeiceInterface {
 
 export class Rook extends PeiceInterface {
   points = 5;
-  isValidMove = () => {};
+  isValidMove = (board, from, to) => {};
 
   constructor(color) {
     super(color);
@@ -136,7 +136,7 @@ export class Rook extends PeiceInterface {
 
 export class Bishop extends PeiceInterface {
   points = 3;
-  isValidMove = () => {};
+  isValidMove = (board, from, to) => {};
 
   constructor(color) {
     super(color);
@@ -153,7 +153,6 @@ export class Bishop extends PeiceInterface {
 
 export class Knight extends PeiceInterface {
   points = 3;
-  isValidMove = () => {};
 
   constructor(color) {
     super(color);
@@ -166,11 +165,29 @@ export class Knight extends PeiceInterface {
   get_name() {
     return 'knight';
   }
+
+  isValidMove (board, from, to) {
+    ChessBoard.must_be(board);
+    BoardSquare.must_be(from, 'occupied');
+    BoardSquare.must_be(to);
+
+    const rowDelta = Math.abs(from.row - to.row);
+    const colDelta = Math.abs(from.column - to.column);
+
+    // L-Shaped Move
+    if ((rowDelta == 2 && colDelta == 1) ||
+        (rowDelta == 1 && colDelta == 2)) {
+      return true;
+    }
+
+    // Invalid Move
+    return false;
+  };
 }
 
 export class Queen extends PeiceInterface {
   points = 9;
-  isValidMove = () => {};
+  isValidMove = (board, from, to) => {};
 
   constructor(color) {
     super(color);
@@ -187,7 +204,7 @@ export class Queen extends PeiceInterface {
 
 export class King extends PeiceInterface {
   points = 0;
-  isValidMove = () => {};
+  isValidMove = (board, from, to) => {};
 
   constructor(color) {
     super(color);
