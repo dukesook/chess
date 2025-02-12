@@ -268,7 +268,6 @@ export class Queen extends PeiceInterface {
 
 export class King extends PeiceInterface {
   points = 0;
-  isValidMove = (board, from, to) => {};
 
   constructor(color) {
     super(color);
@@ -281,4 +280,21 @@ export class King extends PeiceInterface {
   get_name() {
     return 'king';
   }
+
+  isValidMove (board, from, to) {
+    ChessBoard.must_be(board);
+    BoardSquare.must_be(from, 'occupied');
+    BoardSquare.must_be(to);
+
+    const rowDelta = Math.abs(from.row - to.row);
+    const colDelta = Math.abs(from.column - to.column);
+
+    // Move 1 Square
+    if (rowDelta <= 1 && colDelta <= 1) {
+      return true;
+    }
+
+    // Invalid Move
+    return false;
+  };
 }
