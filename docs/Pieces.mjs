@@ -93,13 +93,14 @@ export class Pawn extends PeiceInterface {
     }
 
     // Move Forward 2 Squares
+    const frontSquare = board.board[from.row + delta][from.column];
     if (from.row + 2*delta == to.row &&
       from.column == to.column &&
       !to.piece &&
+      !frontSquare.piece &&     // Path must be clear
       !this.hasMoved) {
         // TODO - En Passant
         // TODO - Pawn Promotion
-        // TODO - Check if path is clear
       return true;
     }
 
