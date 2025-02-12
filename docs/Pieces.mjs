@@ -33,15 +33,6 @@ export default class PeiceInterface {
     const requiredMethods = ['isValidMove', 'get_name', 'get_short_name'];
     this.must_implement(requiredMethods);
   }
-  
-
-  isValidMove() {
-    throw new Error('isValidMove() Not Overridden');
-  };
-
-  get_short_name() {
-    throw new Error('get_short_name() Not Overridden');
-  };
 
   must_implement(requiredMethods) {
     // Ensure each child implements the required methods
@@ -51,6 +42,28 @@ export default class PeiceInterface {
       }
     }
   }
+
+  isValidMove() {
+    throw new Error('isValidMove() Not Overridden');
+  };
+
+  get_short_name() {
+    throw new Error('get_short_name() Not Overridden');
+  };
+
+  pathIsClear(board, from, to) {
+    ChessBoard.must_be(board);
+    BoardSquare.must_be(from, 'occupied');
+    BoardSquare.must_be(to);
+
+    const rowDelta = to.row - from.row;
+    const colDelta = to.column - from.column;
+
+    while (!from.equals(to)) {
+
+    }
+  }
+
 }
 
 export class Pawn extends PeiceInterface {

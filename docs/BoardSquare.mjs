@@ -33,4 +33,12 @@ export default class BoardSquare {
     } 
 
   }
+
+  equals(other) {
+    BoardSquare.must_be(other);
+    if (this.row == other.row && this.column == other.column) {
+      return true;
+    }
+    return false;
+  }
 }
