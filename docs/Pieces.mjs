@@ -76,6 +76,18 @@ export default class PeiceInterface {
     return true;
   }
 
+  static isLinearMove(from, to) {
+    const rowDelta = Math.abs(from.row - to.row);
+    const colDelta = Math.abs(from.column - to.column);
+    return rowDelta == 0 || colDelta == 0;
+  }
+
+  static isDiagonalMove(from, to) {
+    const rowDelta = Math.abs(from.row - to.row);
+    const colDelta = Math.abs(from.column - to.column);
+    return rowDelta == colDelta;
+  }
+
 }
 
 export class Pawn extends PeiceInterface {
@@ -162,20 +174,15 @@ export class Rook extends PeiceInterface {
     BoardSquare.must_be(from, 'occupied');
     BoardSquare.must_be(to);
 
-    let valid = false;
-
-    if (from.row != to.row && from.column == to.column) {
-      valid = true; // Move Vertically
-    }
-    else if (from.row == to.row && from.column != to.column) {
-      valid = true; // Move Horizontally
-    }
-
-    if (!PeiceInterface.pathIsClear(board, from, to)) {
+    if (!PeiceInterface.isLinearMove(from, to)) {
       return false;
     }
 
-    return valid;
+    else if (!PeiceInterface.pathIsClear(board, from, to)) {
+      return false;
+    }
+
+    return true;
   };
 
 
@@ -202,16 +209,15 @@ export class Bishop extends PeiceInterface {
     BoardSquare.must_be(from, 'occupied');
     BoardSquare.must_be(to);
 
-    const rowDelta = Math.abs(from.row - to.row);
-    const colDelta = Math.abs(from.column - to.column);
-
-    if (rowDelta != colDelta) {
+    if (!PeiceInterface.isDiagonalMove(from, to)) {
       return false;
     }
     else if (!PeiceInterface.pathIsClear(board, from, to)) {
       return false;
     }
+
     return true;
+    
   };
 }
 
