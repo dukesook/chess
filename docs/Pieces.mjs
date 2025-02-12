@@ -183,7 +183,7 @@ export class Rook extends PeiceInterface {
 
 export class Bishop extends PeiceInterface {
   points = 3;
-  isValidMove = (board, from, to) => {};
+  
 
   constructor(color) {
     super(color);
@@ -196,6 +196,23 @@ export class Bishop extends PeiceInterface {
   get_name() {
     return 'bishop';
   }
+
+  isValidMove (board, from, to) {
+    ChessBoard.must_be(board);
+    BoardSquare.must_be(from, 'occupied');
+    BoardSquare.must_be(to);
+
+    const rowDelta = Math.abs(from.row - to.row);
+    const colDelta = Math.abs(from.column - to.column);
+
+    if (rowDelta != colDelta) {
+      return false;
+    }
+    else if (!PeiceInterface.pathIsClear(board, from, to)) {
+      return false;
+    }
+    return true;
+  };
 }
 
 export class Knight extends PeiceInterface {
