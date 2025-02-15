@@ -83,11 +83,21 @@ const Chess = {
 
       // Move Piece
       Chess.board.move_piece(fromSquare, toSquare); // throws error if invalid
+      Chess.board.print();
 
-      // Gui
+      // Play Sound
+      playMoveSound();
+
+      // Update Gui
       Gui.movePiece(fromSquare.container, toSquare.container);
   
-      Chess.board.print();
+      let gameOver = Chess.board.capturedKing(playerColor);
+      if (gameOver) {
+        // TODO - Implement Game Over
+        // state = gameOver;
+      }
+
+      // Update State
       const nextState = Chess.getNextState();
       Chess.setState(nextState);
     }
@@ -101,6 +111,7 @@ const Chess = {
 
   },
 
+
   resetPlayerTurn(playerColor) {
     if (playerColor == 'white') {
       Chess.state = State.WHITES_TURN;
@@ -109,6 +120,7 @@ const Chess = {
       Chess.state = State.BLACKS_TURN;
     }
   },
+
 
   setState(state) {
 
@@ -127,6 +139,7 @@ const Chess = {
       Gui.displayPlayersTurn('Black');
     }
   },
+
 
   getNextState: function() {
     const state = Chess.state;
@@ -149,3 +162,9 @@ const Chess = {
 Chess.init();
 
 export default Chess;
+
+function playMoveSound() {
+  let sound = new Audio('./audio/move.mp3');
+  sound.play();
+}
+playMoveSound();

@@ -70,7 +70,7 @@ export default class ChessBoard {
     BoardSquare.must_be(from, 'occupied');
     BoardSquare.must_be(to);
 
-    // You can't capture your own piece
+    // Friendly Capture
     if (to.piece && to.piece.color == from.piece.color) {
       console.log('You can\'t kill your own piece');
       throw new Error('You can\'t kill your own piece');
@@ -87,8 +87,12 @@ export default class ChessBoard {
     from.piece.hasMoved = true;
     to.piece = from.piece;
     from.piece = null;
-    playMoveSound();
 
+  }
+
+  capturedKing(color) {
+    // TODO - Implement
+    return false;
   }
 
   print() {
@@ -112,8 +116,3 @@ export default class ChessBoard {
 }
 
 
-function playMoveSound() {
-  let sound = new Audio('./audio/move.mp3');
-  sound.play();
-}
-playMoveSound();
