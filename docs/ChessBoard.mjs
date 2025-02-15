@@ -63,8 +63,6 @@ export default class ChessBoard {
     BoardSquare.must_be(from, 'occupied');
     BoardSquare.must_be(to);
 
-    // TODO: You can't move to the same square
-
     // Validate Move
     const piece = from.piece;
     const isValidMove = piece.isValidMove(this, from, to);
@@ -76,6 +74,7 @@ export default class ChessBoard {
     from.piece.hasMoved = true;
     to.piece = from.piece;
     from.piece = null;
+    playMoveSound();
 
   }
 
@@ -99,3 +98,9 @@ export default class ChessBoard {
 
 }
 
+
+function playMoveSound() {
+  let sound = new Audio('./audio/move.mp3');
+  sound.play();
+}
+playMoveSound();
