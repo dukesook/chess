@@ -12,6 +12,7 @@ const PIECE_COLOR = Object.freeze({
 })
 
 
+
 export default class PeiceInterface {
   points = null;
   color = null;
@@ -94,6 +95,7 @@ export default class PeiceInterface {
   }
 
 }
+
 
 
 export class Pawn extends PeiceInterface {
@@ -199,6 +201,7 @@ export class Pawn extends PeiceInterface {
 }
 
 
+
 export class Rook extends PeiceInterface {
   points = 5;
 
@@ -261,7 +264,8 @@ export class Rook extends PeiceInterface {
   }
 
 
-} // Class Rook
+}
+
 
 
 export class Bishop extends PeiceInterface {
@@ -327,6 +331,7 @@ export class Bishop extends PeiceInterface {
 }
 
 
+
 export class Knight extends PeiceInterface {
   points = 3;
 
@@ -387,6 +392,7 @@ export class Knight extends PeiceInterface {
 }
 
 
+
 export class Queen extends PeiceInterface {
   points = 9;
 
@@ -420,7 +426,22 @@ export class Queen extends PeiceInterface {
     return false;
   };
 
+  getValidMoves(board, from) {
+    ChessBoard.must_be(board);
+    BoardSquare.must_be(from, 'occupied');
+
+    const validMoves = []; // Array of BoardSquares
+
+    // Rook Moves
+    
+
+    // Bishop Moves
+
+    return validMoves;
+  }
+
 }
+
 
 
 export class King extends PeiceInterface {
@@ -455,3 +476,4 @@ export class King extends PeiceInterface {
     return false;
   };
 }
+

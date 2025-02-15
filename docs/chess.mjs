@@ -83,6 +83,7 @@ const Chess = {
     try {
       // You can't move on your own piece
       if (toSquare.piece && toSquare.piece.color == playerColor) {
+        // TODO: Move this down a layer. These are low level checks
         console.log('You can\'t kill your own piece');
         throw new Error('You can\'t kill your own piece');
       }
