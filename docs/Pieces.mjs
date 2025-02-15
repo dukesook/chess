@@ -228,7 +228,38 @@ export class Rook extends PeiceInterface {
   };
 
 
-}
+  getValidMoves(board, from) {
+    ChessBoard.must_be(board);
+    BoardSquare.must_be(from, 'occupied');
+
+    const validMoves = []; // Array of BoardSquares
+
+    for (let i = 1; i < 8; i++) {
+      let up = board.getSquare(from.row - i, from.column);
+      if (this.isValidMove(board, from, up)) {
+        validMoves.push(up);
+      }
+      
+      let down = board.getSquare(from.row + i, from.column);
+      if (this.isValidMove(board, from, down)) {
+        validMoves.push(down);
+      }
+
+      let left = board.getSquare(from.row, from.column - i);
+      if (this.isValidMove(board, from, left)) {
+        validMoves.push(left);
+      }
+
+      let right = board.getSquare(from.row, from.column + i);
+      if (this.isValidMove(board, from, right)) {
+        validMoves.push(right);
+      }
+    }
+    return validMoves;
+  }
+
+
+} // Class Rook
 
 export class Bishop extends PeiceInterface {
   points = 3;
