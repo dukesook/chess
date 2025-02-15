@@ -70,6 +70,12 @@ export default class ChessBoard {
     BoardSquare.must_be(from, 'occupied');
     BoardSquare.must_be(to);
 
+    // You can't capture your own piece
+    if (to.piece && to.piece.color == from.piece.color) {
+      console.log('You can\'t kill your own piece');
+      throw new Error('You can\'t kill your own piece');
+    }
+
     // Validate Move
     const piece = from.piece;
     const isValidMove = piece.isValidMove(this, from, to);

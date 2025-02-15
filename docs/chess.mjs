@@ -14,7 +14,7 @@ const State = Object.freeze({
 })
 
 const Chess = {
-  board: null,
+  board: null, // class ChessBoard
   selectedSquare: null, // The square with the piece that player has selected to move
   state: State.WHITES_TURN,
 
@@ -78,21 +78,14 @@ const Chess = {
     const fromSquare = Chess.selectedSquare;
     BoardSquare.must_be(toSquare);
     BoardSquare.must_be(fromSquare);
-
     
     try {
-      // You can't move on your own piece
-      if (toSquare.piece && toSquare.piece.color == playerColor) {
-        // TODO: Move this down a layer. These are low level checks
-        console.log('You can\'t kill your own piece');
-        throw new Error('You can\'t kill your own piece');
-      }
 
       // Move Piece
-      Chess.board.move_piece(from, to); // throws error if invalid
+      Chess.board.move_piece(fromSquare, toSquare); // throws error if invalid
 
       // Gui
-      Gui.movePiece(from.container, to.container);
+      Gui.movePiece(fromSquare.container, toSquare.container);
   
       Chess.board.print();
       const nextState = Chess.getNextState();
@@ -102,6 +95,7 @@ const Chess = {
       console.error(e);
       Chess.resetPlayerTurn(playerColor);
     }
+
 
     Gui.unhighlightSquare(fromSquare);
 
