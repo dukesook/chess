@@ -11,6 +11,7 @@ const PIECE_COLOR = Object.freeze({
   }
 })
 
+
 export default class PeiceInterface {
   points = null;
   color = null;
@@ -93,6 +94,7 @@ export default class PeiceInterface {
   }
 
 }
+
 
 export class Pawn extends PeiceInterface {
   points = 1;
@@ -196,6 +198,7 @@ export class Pawn extends PeiceInterface {
   }
 }
 
+
 export class Rook extends PeiceInterface {
   points = 5;
 
@@ -233,7 +236,6 @@ export class Rook extends PeiceInterface {
     BoardSquare.must_be(from, 'occupied');
 
     const validMoves = []; // Array of BoardSquares
-
     for (let i = 1; i < 8; i++) {
       let up = board.getSquare(from.row - i, from.column);
       if (this.isValidMove(board, from, up)) {
@@ -260,6 +262,7 @@ export class Rook extends PeiceInterface {
 
 
 } // Class Rook
+
 
 export class Bishop extends PeiceInterface {
   points = 3;
@@ -291,8 +294,38 @@ export class Bishop extends PeiceInterface {
 
     return true;
     
-  };
+  }
+
+  getValidMoves(board, from) {
+    ChessBoard.must_be(board);
+    BoardSquare.must_be(from, 'occupied');
+
+    const validMoves = []; // Array of BoardSquares
+    for (let i = 1; i < 8; i++) {
+      let upLeft = board.getSquare(from.row - i, from.column - i);
+      if (this.isValidMove(board, from, upLeft)) {
+        validMoves.push(upLeft);
+      }
+      
+      let upRight = board.getSquare(from.row - i, from.column + i);
+      if (this.isValidMove(board, from, upRight)) {
+        validMoves.push(upRight);
+      }
+
+      let downLeft = board.getSquare(from.row + i, from.column - i);
+      if (this.isValidMove(board, from, downLeft)) {
+        validMoves.push(downLeft);
+      }
+
+      let downRight = board.getSquare(from.row + i, from.column + i);
+      if (this.isValidMove(board, from, downRight)) {
+        validMoves.push(downRight);
+      }
+    }
+    return validMoves;
+  }
 }
+
 
 export class Knight extends PeiceInterface {
   points = 3;
@@ -326,7 +359,33 @@ export class Knight extends PeiceInterface {
     // Invalid Move
     return false;
   };
+
+  getValidMoves(board, from) {
+    ChessBoard.must_be(board);
+    BoardSquare.must_be(from, 'occupied');
+
+    const validMoves = []; // Array of BoardSquares
+    const deltas = [
+      {row: -2, col: -1},
+      {row: -2, col:  1},
+      {row: -1, col: -2},
+      {row: -1, col:  2},
+      {row:  1, col: -2},
+      {row:  1, col:  2},
+      {row:  2, col: -1},
+      {row:  2, col:  1}
+    ];
+
+    for (const delta of deltas) {
+      let to = board.getSquare(from.row + delta.row, from.column + delta.col);
+      if (to && this.isValidMove(board, from, to)) {
+        validMoves.push(to);
+      }
+    }
+    return validMoves;
+  }
 }
+
 
 export class Queen extends PeiceInterface {
   points = 9;
@@ -362,6 +421,7 @@ export class Queen extends PeiceInterface {
   };
 
 }
+
 
 export class King extends PeiceInterface {
   points = 0;
