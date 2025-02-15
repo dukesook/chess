@@ -59,6 +59,13 @@ export default class ChessBoard {
     }
   }
 
+  getSquare(row, col) {
+    if (row < 0 || row > 7 || col < 0 || col > 7) {
+      return null;
+    }
+    return this.board[row][col];
+  }
+
   move_piece(from, to) {
     BoardSquare.must_be(from, 'occupied');
     BoardSquare.must_be(to);

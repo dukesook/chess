@@ -1,6 +1,5 @@
 import ChessBoard from './ChessBoard.mjs';
 import BoardSquare from './BoardSquare.mjs';
-import Chess from './chess.mjs';
 
 const PIECE_COLOR = Object.freeze({
   WHITE: 'white',
@@ -30,6 +29,7 @@ export default class PeiceInterface {
     }
 
     // Validate Children
+    // TODO: add 'getValidMoves' to requiredMethods
     const requiredMethods = ['isValidMove', 'get_name', 'get_short_name'];
     this.must_implement(requiredMethods);
   }
@@ -49,6 +49,10 @@ export default class PeiceInterface {
 
   get_short_name() {
     throw new Error('get_short_name() Not Overridden');
+  };
+
+  getValidMoves() {
+    throw new Error('getValidMoves() Not Overridden');
   };
 
   static pathIsClear(board, from, to) {
@@ -106,20 +110,23 @@ export class Pawn extends PeiceInterface {
     return 'pawn';
   }
 
-  isValidMove(board, from, to) {
-    ChessBoard.must_be(board);
-    BoardSquare.must_be(from, 'occupied');
-    BoardSquare.must_be(to);
-    let delta = null;
+  getDirection() {
     if (this.color == PIECE_COLOR.WHITE) {
-      delta = -1;
+      return -1; // White Pieces move up
     }
     else if (this.color == PIECE_COLOR.BLACK) {
-      delta = 1;
+      return 1; // Black Pieces move down
     }
     else {
       throw new Error('Invalid piece color: ' + this.color);
     }
+  }
+
+  isValidMove(board, from, to) {
+    ChessBoard.must_be(board);
+    BoardSquare.must_be(from, 'occupied');
+    BoardSquare.must_be(to);
+    let delta = this.getDirection();
 
     // Move Forward 1 Square
     if (from.row + delta == to.row &&
@@ -151,7 +158,42 @@ export class Pawn extends PeiceInterface {
 
     // Invalid Move
     return false;
+  
   };
+
+  getValidMoves(board, from) {
+    Utility.must_be(board, ChessBoard);
+    BoardSquare.must_be(from, 'occupied');
+
+    const validMoves = []; // Array of BoardSquares
+    let delta = this.getDirection();
+
+    // Move Forward 1 Square
+    let to = board.getSquare(from.row + delta, from.column);
+    if (to && !to.piece) {
+      validMoves.push(to);
+    }
+  
+    // Move Forward 2 Squares
+    to = board.getSquare(from.row + 2*delta, from.column);
+    if (to && !to.piece && !this.hasMoved) {
+      validMoves.push(to);
+    }
+
+    // Capture Diagonally Left
+    to = board.getSquare(from.row + delta, from.column - 1);
+    if (to && to.piece && to.piece.color != this.color) {
+      validMoves.push(to);
+    }
+    
+    // Capture Diagonally Right
+    to = board.getSquare(from.row + delta, from.column + 1);
+    if (to && to.piece && to.piece.color != this.color) {
+      validMoves.push(to);
+    }
+
+    return validMoves;
+  }
 }
 
 export class Rook extends PeiceInterface {
