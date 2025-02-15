@@ -89,7 +89,12 @@ const Chess = {
       }
 
       // Move Piece
-      Chess.movePiece(fromSquare, toSquare);
+      Chess.board.move_piece(from, to); // throws error if invalid
+
+      // Gui
+      Gui.movePiece(from.container, to.container);
+  
+      Chess.board.print();
       const nextState = Chess.getNextState();
       Chess.setState(nextState);
     }
@@ -144,21 +149,6 @@ const Chess = {
       return State.WHITES_TURN;
     }
   },
-
-
-  movePiece: function(from, to) {
-    BoardSquare.must_be(from);
-    BoardSquare.must_be(to);
-
-    if (!from.piece) {
-      throw new Error('No piece to move');
-    }
-
-    Chess.board.move_piece(from, to); // throws error if invalid
-    Gui.movePiece(from.container, to.container);
-
-    Chess.board.print();
-  }
 
 }
 
