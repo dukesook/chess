@@ -9,7 +9,10 @@ export const ChessGui = {
   initBoard(chessBoard, boardElement, onclickSquare) {
     ChessBoard.must_be(chessBoard);
     must_be_HTMLElement(boardElement);
-
+    
+    // Clear Board
+    boardElement.innerHTML = '';
+    
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
         const squareElement = document.createElement('div');

@@ -4,6 +4,7 @@ import Gui from './ChessGui.mjs';
 console.log('loading chess.mjs');
 
 const chessboardHTML = document.getElementById('chessboard');
+const resetButton = document.getElementById('reset-button');
 
 // State Machine
 const State = Object.freeze({
@@ -23,6 +24,7 @@ const Chess = {
     Chess.board = new ChessBoard();
     Chess.board.print();
     Gui.initBoard(Chess.board, chessboardHTML, Chess.onclickSquare);
+    Chess.setState(State.WHITES_TURN);
   },
 
   onclickSquare: function(square) {
@@ -168,6 +170,8 @@ const Chess = {
 }
 
 Chess.init();
+resetButton.onclick = Chess.init;
+
 
 export default Chess;
 

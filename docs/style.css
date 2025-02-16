@@ -41,3 +41,7 @@ nav {
 #player-turn {
   font-size: 5em;
 }
+
+.flex {
+  display: flex;
+}
