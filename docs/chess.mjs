@@ -11,6 +11,7 @@ const State = Object.freeze({
   WHITE_MOVING: 1,
   BLACKS_TURN: 2,
   BLACK_MOVING: 3,
+  GAME_OVER: 4,
 })
 
 const Chess = {
@@ -44,6 +45,9 @@ const Chess = {
     }
     else if (state == State.BLACK_MOVING) {
       Chess.handlePlayerMoving(square, 'black'); // Black selected a destination for their peice
+    }
+    else if (state == State.GAME_OVER) {
+      console.log('TODO: RESET GAME');
     }
   },
 
@@ -91,15 +95,16 @@ const Chess = {
       // Update Gui
       Gui.movePiece(fromSquare.container, toSquare.container);
   
-      let gameOver = Chess.board.capturedKing(playerColor);
+      // Update State
+      let gameOver = Chess.board.kingCaptured;
       if (gameOver) {
-        // TODO - Implement Game Over
-        // state = gameOver;
+        Chess.setState(State.GAME_OVER);
+      }
+      else {
+        const nextState = Chess.getNextState();
+        Chess.setState(nextState);
       }
 
-      // Update State
-      const nextState = Chess.getNextState();
-      Chess.setState(nextState);
     }
     catch (e) {
       console.error(e);
@@ -137,6 +142,9 @@ const Chess = {
     }
     else if (state == State.BLACK_MOVING) {
       Gui.displayPlayersTurn('Black');
+    }
+    else if (state == State.GAME_OVER) {
+      console.log('GAME OVER!');
     }
   },
 

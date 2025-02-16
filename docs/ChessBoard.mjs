@@ -3,6 +3,8 @@ import BoardSquare from './BoardSquare.mjs';
 export default class ChessBoard {
   // Declare a 2d array of Board Squares
   board = [];
+  kingCaptured = false;
+
   constructor() {
     this.board = ChessBoard.createBoard();
   }
@@ -83,6 +85,10 @@ export default class ChessBoard {
       throw new Error('Invalid Move');
     }
 
+    if (to.piece instanceof King) {
+      this.kingCaptured = true;
+    }
+
     // Update Controller
     from.piece.hasMoved = true;
     to.piece = from.piece;
@@ -90,10 +96,6 @@ export default class ChessBoard {
 
   }
 
-  capturedKing(color) {
-    // TODO - Implement
-    return false;
-  }
 
   print() {
     let output = '';
