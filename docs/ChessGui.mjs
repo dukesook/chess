@@ -2,7 +2,6 @@ import ChessBoard from './ChessBoard.mjs';
 import BoardSquare from './BoardSquare.mjs';
 import Utility from './Utility.mjs';
 
-const playerTurn = document.getElementById('player-turn');
 const blacksTurn = document.getElementById('blacks-turn');
 const whitesTurn = document.getElementById('whites-turn');
 
@@ -104,9 +103,15 @@ export const ChessGui = {
     container.appendChild(img);
   },
 
-  displayPlayersTurn(playerColor) {
-    Utility.must_be_string(playerColor);
-    playerTurn.innerHTML = playerColor;
+  displayWhitesTurn() {
+    whitesTurn.style.fontWeight = 'bold';
+    blacksTurn.style.fontWeight = 'normal';
+  },
+
+  displayBlacksTurn() {
+    blacksTurn.style.fontWeight = 'bold';
+    whitesTurn.style.fontWeight = 'normal';
+    
   }
 }
 

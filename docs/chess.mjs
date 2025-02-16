@@ -31,16 +31,6 @@ const Chess = {
   onclickSquare: function(square) {
     BoardSquare.must_be(square);
 
-    // TODO - move PIECE_COLOR up a level
-    //        Since the controller needs access to it,
-    //        The controller can just create it and pass it down.
-    // But should a Piece know it's colors?
-    // Answer: No!! A Piece should be tied to just white or black:
-    //              What is you want blue pieces? Or clear? The piece
-    //              Needs to know that it has a color, let the high-level
-    //              Controller decide what that is.
-
-
     const state = Chess.state;
     if (state == State.WHITES_TURN) {
       Chess.handlePlayersTurn(square, PieceColor.WHITE); // White Selected Their Piece to Move
@@ -137,19 +127,20 @@ const Chess = {
 
   setState(state) {
 
-    // TODO: add a Chess.playerTurn variable!
+    // TODO: add a Chess.playerTurn variable.
+    //    // But why?
     Chess.state = state;
     if (state == State.WHITES_TURN) {
-      Gui.displayPlayersTurn('White');
+      Gui.displayWhitesTurn(PieceColor.WHITE);
     }
     else if (state == State.WHITE_MOVING) {
-      Gui.displayPlayersTurn('White');
+      Gui.displayWhitesTurn(PieceColor.WHITE);
     }
     else if (state == State.BLACKS_TURN) {
-      Gui.displayPlayersTurn('Black');
+      Gui.displayBlacksTurn(PieceColor.BLACK);
     }
     else if (state == State.BLACK_MOVING) {
-      Gui.displayPlayersTurn('Black');
+      Gui.displayBlacksTurn(PieceColor.BLACK);
     }
     else if (state == State.GAME_OVER) {
       console.log('GAME OVER!');
