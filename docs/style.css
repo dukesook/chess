@@ -58,9 +58,12 @@ nav {
   margin: 10px;
   width: 200px;
   text-align: center;
+  color: rgb(179, 179, 179);
+  background-color: lightgray;
 }
 
 .player-turn-active {
-  background-color: lightgray;
+  background-color: black;
   font-weight: bold;
+  color: white;
 }
