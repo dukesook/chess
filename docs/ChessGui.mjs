@@ -1,14 +1,16 @@
 import ChessBoard from './ChessBoard.mjs';
 import BoardSquare from './BoardSquare.mjs';
-// import { PieceInterface } from './Pieces.mjs'
+import Utility from './Utility.mjs';
 
 const playerTurn = document.getElementById('player-turn');
+const blacksTurn = document.getElementById('blacks-turn');
+const whitesTurn = document.getElementById('whites-turn');
 
 export const ChessGui = {
 
   initBoard(chessBoard, boardElement, onclickSquare) {
     ChessBoard.must_be(chessBoard);
-    must_be_HTMLElement(boardElement);
+    Utility.must_be(boardElement, HTMLElement);
     
     // Clear Board
     boardElement.innerHTML = '';
@@ -50,7 +52,7 @@ export const ChessGui = {
 
   displayBoard(chessBoard, chessboardHTML) {
     ChessBoard.must_be(chessBoard);
-    must_be_HTMLElement(chessboardHTML);
+    Utility.must_be(chessboardHTML, HTMLElement);
 
     const board = chessBoard.board;
 
@@ -75,8 +77,10 @@ export const ChessGui = {
   },
 
   movePiece(from, to) {
-    must_be_HTMLElement(from);
-    must_be_HTMLElement(to);
+    Utility.must_be(from, HTMLElement);
+    Utility.must_be(to, HTMLElement);
+
+
 
     to.innerHTML = from.innerHTML;
     from.innerHTML = '';
@@ -101,14 +105,10 @@ export const ChessGui = {
   },
 
   displayPlayersTurn(playerColor) {
+    Utility.must_be_string(playerColor);
     playerTurn.innerHTML = playerColor;
   }
 }
 
 export default ChessGui;
 
-function must_be_HTMLElement(object) {
-  if (!(object instanceof HTMLElement)) {
-    throw new Error('Must be a HTMLElement, but got ' + object);
-  }
-}

@@ -179,4 +179,3 @@ function playMoveSound() {
   let sound = new Audio('./audio/move.mp3');
   sound.play();
 }
-playMoveSound();
