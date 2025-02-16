@@ -1,12 +1,12 @@
 import ChessBoard from './ChessBoard.mjs';
 import BoardSquare from './BoardSquare.mjs';
 
-const PIECE_COLOR = Object.freeze({
+export const PieceColor = Object.freeze({
   WHITE: 'white',
   BLACK: 'black',
   must_be: function(object) {
     if (!Object.values(this).includes(object)) {
-      throw new Error(`Invalid PIECE_COLOR value: ${object}`);
+      throw new Error(`Invalid PieceColor value: ${object}`);
     }
   }
 })
@@ -16,12 +16,12 @@ const PIECE_COLOR = Object.freeze({
 export default class PeiceInterface {
   points = null;
   color = null;
-  WHITE = PIECE_COLOR.WHITE;
-  BLACK = PIECE_COLOR.BLACK;
+  WHITE = PieceColor.WHITE;
+  BLACK = PieceColor.BLACK;
 
   constructor(color) {
     
-    PIECE_COLOR.must_be(color);
+    PieceColor.must_be(color);
     this.color = color;
 
 
@@ -115,10 +115,10 @@ export class Pawn extends PeiceInterface {
   }
 
   getDirection() {
-    if (this.color == PIECE_COLOR.WHITE) {
+    if (this.color == PieceColor.WHITE) {
       return -1; // White Pieces move up
     }
-    else if (this.color == PIECE_COLOR.BLACK) {
+    else if (this.color == PieceColor.BLACK) {
       return 1; // Black Pieces move down
     }
     else {

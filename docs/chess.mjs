@@ -1,6 +1,7 @@
 import ChessBoard from './ChessBoard.mjs';
 import BoardSquare from './BoardSquare.mjs';
 import Gui from './ChessGui.mjs';
+import { PieceColor } from './Pieces.mjs';
 console.log('loading chess.mjs');
 
 const chessboardHTML = document.getElementById('chessboard');
@@ -33,20 +34,25 @@ const Chess = {
     // TODO - move PIECE_COLOR up a level
     //        Since the controller needs access to it,
     //        The controller can just create it and pass it down.
+    // But should a Piece know it's colors?
+    // Answer: No!! A Piece should be tied to just white or black:
+    //              What is you want blue pieces? Or clear? The piece
+    //              Needs to know that it has a color, let the high-level
+    //              Controller decide what that is.
 
 
     const state = Chess.state;
     if (state == State.WHITES_TURN) {
-      Chess.handlePlayersTurn(square, 'white'); // White Selected Their Piece to Move
+      Chess.handlePlayersTurn(square, PieceColor.WHITE); // White Selected Their Piece to Move
     }
     else if (state == State.WHITE_MOVING) {
-      Chess.handlePlayerMoving(square, 'white'); // White selected a destination for their piece
+      Chess.handlePlayerMoving(square, PieceColor.WHITE); // White selected a destination for their piece
     }
     else if (state == State.BLACKS_TURN) {
       Chess.handlePlayersTurn(square, 'black'); // Black Selected Their Piece to Move
     }
     else if (state == State.BLACK_MOVING) {
-      Chess.handlePlayerMoving(square, 'black'); // Black selected a destination for their peice
+      Chess.handlePlayerMoving(square, PieceColor.BLACK); // Black selected a destination for their peice
     }
     else if (state == State.GAME_OVER) {
       console.log('TODO: RESET GAME');
@@ -120,10 +126,10 @@ const Chess = {
 
 
   resetPlayerTurn(playerColor) {
-    if (playerColor == 'white') {
+    if (playerColor == PieceColor.WHITE) {
       Chess.state = State.WHITES_TURN;
     }
-    else if (playerColor == 'black') {
+    else if (playerColor == PieceColor.BLACK) {
       Chess.state = State.BLACKS_TURN;
     }
   },
