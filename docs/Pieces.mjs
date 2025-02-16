@@ -1,6 +1,7 @@
 import ChessBoard from './ChessBoard.mjs';
 import BoardSquare from './BoardSquare.mjs';
 
+// Color Enumeration
 export const PieceColor = Object.freeze({
   WHITE: 'white',
   BLACK: 'black',

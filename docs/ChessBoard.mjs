@@ -1,4 +1,4 @@
-import { Pawn, Rook, Bishop, Knight, King, Queen } from './Pieces.mjs';
+import { Pawn, Rook, Bishop, Knight, King, Queen, PieceColor } from './Pieces.mjs';
 import BoardSquare from './BoardSquare.mjs';
 export default class ChessBoard {
   // Declare a 2d array of Board Squares
@@ -20,35 +20,35 @@ export default class ChessBoard {
 
     // Add Pawns
     for (let col = 0; col < 8; col++) {
-      board[1][col].piece = new Pawn('black');
-      board[6][col].piece = new Pawn('white');
+      board[1][col].piece = new Pawn(PieceColor.BLACK);
+      board[6][col].piece = new Pawn(PieceColor.WHITE);
     }
 
     // Add Rooks
-    board[0][0].piece = new Rook('black');
-    board[0][7].piece = new Rook('black');
-    board[7][0].piece = new Rook('white');
-    board[7][7].piece = new Rook('white');
+    board[0][0].piece = new Rook(PieceColor.BLACK);
+    board[0][7].piece = new Rook(PieceColor.BLACK);
+    board[7][0].piece = new Rook(PieceColor.WHITE);
+    board[7][7].piece = new Rook(PieceColor.WHITE);
 
     // Add Knights
-    board[0][1].piece = new Knight('black');
-    board[0][6].piece = new Knight('black');
-    board[7][1].piece = new Knight('white');
-    board[7][6].piece = new Knight('white');
+    board[0][1].piece = new Knight(PieceColor.BLACK);
+    board[0][6].piece = new Knight(PieceColor.BLACK);
+    board[7][1].piece = new Knight(PieceColor.WHITE);
+    board[7][6].piece = new Knight(PieceColor.WHITE);
 
     // Add Bishops
-    board[0][2].piece = new Bishop('black');
-    board[0][5].piece = new Bishop('black');
-    board[7][2].piece = new Bishop('white');
-    board[7][5].piece = new Bishop('white');
+    board[0][2].piece = new Bishop(PieceColor.BLACK);
+    board[0][5].piece = new Bishop(PieceColor.BLACK);
+    board[7][2].piece = new Bishop(PieceColor.WHITE);
+    board[7][5].piece = new Bishop(PieceColor.WHITE);
 
     // Add Queens
-    board[0][3].piece = new Queen('black');
-    board[7][3].piece = new Queen('white');
+    board[0][3].piece = new Queen(PieceColor.BLACK);
+    board[7][3].piece = new Queen(PieceColor.WHITE);
 
     // Add Kings
-    board[0][4].piece = new King('black');
-    board[7][4].piece = new King('white');
+    board[0][4].piece = new King(PieceColor.BLACK);
+    board[7][4].piece = new King(PieceColor.WHITE);
 
 
     return board;
