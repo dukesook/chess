@@ -104,14 +104,13 @@ export const ChessGui = {
   },
 
   displayWhitesTurn() {
-    whitesTurn.style.fontWeight = 'bold';
-    blacksTurn.style.fontWeight = 'normal';
+    whitesTurn.classList.add('player-turn-active');
+    blacksTurn.classList.remove('player-turn-active');
   },
 
   displayBlacksTurn() {
-    blacksTurn.style.fontWeight = 'bold';
-    whitesTurn.style.fontWeight = 'normal';
-    
+    blacksTurn.classList.add('player-turn-active');
+    whitesTurn.classList.remove('player-turn-active');
   }
 }
 
