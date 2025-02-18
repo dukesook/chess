@@ -6,6 +6,9 @@ console.log('loading chess.mjs');
 
 const chessboardHTML = document.getElementById('chessboard');
 const resetButton = document.getElementById('reset-button');
+const moveSound = new Audio('./audio/move.mp3');
+const wrongSound = new Audio('./audio/wrong.mp3');
+
 
 // State Machine
 const State = Object.freeze({
@@ -88,7 +91,7 @@ const Chess = {
       Chess.board.print();
 
       // Play Sound
-      playMoveSound();
+      moveSound.play();
 
       // Update Gui
       Gui.movePiece(fromSquare.container, toSquare.container);
@@ -107,6 +110,7 @@ const Chess = {
     catch (e) {
       console.error(e);
       Chess.resetPlayerTurn(playerColor);
+      wrongSound.play();
     }
 
 
@@ -171,8 +175,3 @@ resetButton.onclick = Chess.init;
 
 
 export default Chess;
-
-function playMoveSound() {
-  let sound = new Audio('./audio/move.mp3');
-  sound.play();
-}
