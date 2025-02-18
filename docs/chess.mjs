@@ -151,9 +151,14 @@ const Chess = {
       Gui.displayBlacksTurn(PieceColor.BLACK);
     }
     else if (state == State.GAME_OVER) {
-      console.log('GAME OVER!');
-      endSong.play();
+      Chess.gameOver();
     }
+  },
+
+
+  gameOver() {
+    console.log('GAME OVER!');
+    endSong.play();
   },
 
 
@@ -177,6 +182,7 @@ const Chess = {
 
 Chess.init();
 resetButton.onclick = Chess.init;
+endButton.onclick = Chess.gameOver;
 
 
 export default Chess;
