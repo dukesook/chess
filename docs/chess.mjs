@@ -6,8 +6,10 @@ console.log('loading chess.mjs');
 
 const chessboardHTML = document.getElementById('chessboard');
 const resetButton = document.getElementById('reset-button');
+const endButton = document.getElementById('end-button');
 const moveSound = new Audio('./audio/move.mp3');
 const wrongSound = new Audio('./audio/wrong.mp3');
+const endSong = new Audio('./audio/turn_down_for_what.mp3');
 
 
 // State Machine
@@ -29,6 +31,8 @@ const Chess = {
     Chess.board.print();
     Gui.initBoard(Chess.board, chessboardHTML, Chess.onclickSquare);
     Chess.setState(State.WHITES_TURN);
+    endSong.pause();
+    endSong.currentTime = 0;
   },
 
   onclickSquare: function(square) {
@@ -148,6 +152,7 @@ const Chess = {
     }
     else if (state == State.GAME_OVER) {
       console.log('GAME OVER!');
+      endSong.play();
     }
   },
 
