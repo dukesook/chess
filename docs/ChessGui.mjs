@@ -4,6 +4,8 @@ import Utility from './Utility.mjs';
 
 const blacksTurn = document.getElementById('blacks-turn');
 const whitesTurn = document.getElementById('whites-turn');
+const rootStyle = getComputedStyle(document.documentElement);
+const moveDuration = parseFloat(rootStyle.getPropertyValue('--move-duration'));
 
 export const ChessGui = {
 
@@ -95,12 +97,11 @@ export const ChessGui = {
     console.log('piece', piece);
       
     piece.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-
     setTimeout(() => {
       piece.style.transform = '';
       to.innerHTML = from.innerHTML;
       from.innerHTML = '';
-    }, 1000); // TODO - don't hardcode time
+    }, moveDuration);
   },
 
   highlightSquare(square) {

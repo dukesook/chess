@@ -1,3 +1,7 @@
+:root {
+  --move-duration: 400ms;
+}
+
 .chessboard {
   display: grid;
   /* background-color: brown; */
@@ -18,7 +22,7 @@
 
 
 .chess-piece {
-  transition: all 1.0s;
+  transition: all var(--move-duration);
 }
 
 .chess-piece:hover {
