@@ -16,9 +16,16 @@
   font-size: 30px;
 }
 
-/* .chessboard > .board-square:hover {
-  background-color: lightgray;
-} */
+
+.chess-piece {
+  transition: all 1.0s;
+}
+
+.chess-piece:hover {
+  /* transform: scale(1.8); */
+  /* transform: translate(50px, 100px); */
+}
+
 
 .chessboard > .light-square {
   background-color: rgb(237,214,176);

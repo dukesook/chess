@@ -71,18 +71,36 @@ export const ChessGui = {
 
   createPiece(type, color) {
     const img = document.createElement('img');
+    img.classList.add('chess-piece');
     img.src = `./images/${color}_${type}.svg`;
     return img;
   },
 
   movePiece(from, to) {
-    Utility.must_be(from, HTMLElement);
-    Utility.must_be(to, HTMLElement);
+    Utility.must_be(from, HTMLDivElement);
+    Utility.must_be(to, HTMLDivElement);
 
+    const fromRect = from.getBoundingClientRect();
+    const toRect = to.getBoundingClientRect();
+    console.log('fromRect', fromRect);
+    console.log('toRect', toRect);
 
+    const deltaX = toRect.left - fromRect.left;
+    const deltaY = toRect.top - fromRect.top;
+    console.log('deltaX', deltaX);
+    console.log('deltaY', deltaY);
 
-    to.innerHTML = from.innerHTML;
-    from.innerHTML = '';
+    const piece = from.querySelector('.chess-piece');
+    Utility.must_be(piece, HTMLImageElement);
+    console.log('piece', piece);
+      
+    piece.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+
+    setTimeout(() => {
+      piece.style.transform = '';
+      to.innerHTML = from.innerHTML;
+      from.innerHTML = '';
+    }, 1000); // TODO - don't hardcode time
   },
 
   highlightSquare(square) {
@@ -93,14 +111,6 @@ export const ChessGui = {
   unhighlightSquare(square) {
     BoardSquare.must_be(square);
     square.container.classList.remove('highlight-square');
-  },
-
-  addPawn(square) {
-    BoardSquare.must_be(square);
-    const container = square.container;
-    const img = document.createElement('img');
-    img.src = './images/white_pawn.svg';
-    container.appendChild(img);
   },
 
   displayWhitesTurn() {
