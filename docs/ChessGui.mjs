@@ -84,17 +84,12 @@ export const ChessGui = {
 
     const fromRect = from.getBoundingClientRect();
     const toRect = to.getBoundingClientRect();
-    console.log('fromRect', fromRect);
-    console.log('toRect', toRect);
 
     const deltaX = toRect.left - fromRect.left;
     const deltaY = toRect.top - fromRect.top;
-    console.log('deltaX', deltaX);
-    console.log('deltaY', deltaY);
 
     const piece = from.querySelector('.chess-piece');
     Utility.must_be(piece, HTMLImageElement);
-    console.log('piece', piece);
       
     piece.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
     setTimeout(() => {
