@@ -2,6 +2,7 @@ import ChessBoard from './ChessBoard.mjs';
 import BoardSquare from './BoardSquare.mjs';
 import Gui from './ChessGui.mjs';
 import { PieceColor } from './Pieces.mjs';
+import Timer from './Timer.mjs';
 console.log('loading chess.mjs');
 
 const chessboardHTML = document.getElementById('chessboard');
@@ -10,21 +11,26 @@ const endButton = document.getElementById('end-button');
 const moveSound = new Audio('./audio/move.mp3');
 const wrongSound = new Audio('./audio/wrong.mp3');
 const endSong = new Audio('./audio/turn_down_for_what.mp3');
+const whitesTimeHTML = document.getElementById('whites-time');
+const blacksTimeHTML = document.getElementById('blacks-time');
+
 
 
 // State Machine
 const State = Object.freeze({
-  WHITES_TURN: 0,
-  WHITE_MOVING: 1,
-  BLACKS_TURN: 2,
-  BLACK_MOVING: 3,
-  GAME_OVER: 4,
+  WHITES_TURN: 1,
+  WHITE_MOVING: 2,
+  BLACKS_TURN: 3,
+  BLACK_MOVING: 4,
+  GAME_OVER: 5,
 })
 
 const Chess = {
   board: null, // class ChessBoard
   selectedSquare: null, // The square with the piece that player has selected to move
   state: State.WHITES_TURN,
+  whitesTimer: new Timer(),
+  blacksTimer: new Timer(),
 
   init: function() {
     Chess.board = new ChessBoard();
@@ -33,11 +39,17 @@ const Chess = {
     Chess.setState(State.WHITES_TURN);
     endSong.pause();
     endSong.currentTime = 0;
+    Chess.Timers.reset();
+    setInterval(() => {
+      whitesTimeHTML.innerHTML = Chess.whitesTimer.to_string();
+      blacksTimeHTML.innerHTML = Chess.blacksTimer.to_string();
+    }, 10)
   },
 
   onclickSquare: function(square) {
     BoardSquare.must_be(square);
 
+    Chess.Timers.debug();
     const state = Chess.state;
     if (state == State.WHITES_TURN) {
       Chess.handlePlayersTurn(square, PieceColor.WHITE); // White Selected Their Piece to Move
@@ -78,7 +90,6 @@ const Chess = {
     Chess.selectedSquare = square;
     Gui.highlightSquare(square);
     Chess.state = Chess.getNextState();
-    console.log('VALID: Moving to state', Chess.state);
 
   },
 
@@ -134,24 +145,24 @@ const Chess = {
 
 
   setState(state) {
-
-    // TODO: add a Chess.playerTurn variable.
-    //    // But why?
     Chess.state = state;
     if (state == State.WHITES_TURN) {
       Gui.displayWhitesTurn(PieceColor.WHITE);
+      Chess.Timers.startWhite();
     }
     else if (state == State.WHITE_MOVING) {
       Gui.displayWhitesTurn(PieceColor.WHITE);
     }
     else if (state == State.BLACKS_TURN) {
       Gui.displayBlacksTurn(PieceColor.BLACK);
+      Chess.Timers.startBlack();
     }
     else if (state == State.BLACK_MOVING) {
       Gui.displayBlacksTurn(PieceColor.BLACK);
     }
     else if (state == State.GAME_OVER) {
       Chess.gameOver();
+      Chess.Timers.pause();
     }
   },
 
@@ -176,6 +187,34 @@ const Chess = {
     else if (state == State.BLACK_MOVING) {
       return State.WHITES_TURN;
     }
+  },
+
+  Timers: {
+    reset: function() {
+      Chess.whitesTimer.reset();
+      Chess.blacksTimer.reset(); 
+    },
+
+    startWhite: function() {
+      Chess.whitesTimer.start();
+      Chess.blacksTimer.pause();
+    },
+
+    startBlack: function() {
+      Chess.whitesTimer.pause();
+      Chess.blacksTimer.start();
+    },
+
+    pause: function() {
+      Chess.whitesTimer.pause();
+      Chess.blacksTimer.pause();
+    },
+
+    debug: function() {
+      console.log('white: ' + Chess.whitesTimer.to_string());
+      console.log('black: ' + Chess.blacksTimer.to_string());
+    },
+
   },
 
 }
