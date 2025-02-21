@@ -164,12 +164,13 @@ const Chess = {
     }
     else if (state == State.GAME_OVER) {
       Chess.gameOver();
-      Chess.Timers.pause();
     }
   },
 
 
   gameOver() {
+    Chess.Timers.pause();
+    Chess.state = State.GAME_OVER;
     console.log('GAME OVER!');
     endSong.play();
   },
