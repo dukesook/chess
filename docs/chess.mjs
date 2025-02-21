@@ -43,6 +43,8 @@ const Chess = {
     setInterval(() => {
       whitesTimeHTML.innerHTML = Chess.whitesTimer.to_string();
       blacksTimeHTML.innerHTML = Chess.blacksTimer.to_string();
+      Chess.whitesTimer.timeupCallback = Chess.gameOver;
+      Chess.blacksTimer.timeupCallback = Chess.gameOver;
     }, 10)
   },
 
@@ -64,7 +66,7 @@ const Chess = {
       Chess.handlePlayerMoving(square, PieceColor.BLACK); // Black selected a destination for their peice
     }
     else if (state == State.GAME_OVER) {
-      console.log('TODO: RESET GAME');
+      // Do nothing, wait for game reset
     }
   },
 

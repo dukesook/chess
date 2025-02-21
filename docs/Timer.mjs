@@ -1,12 +1,12 @@
 
 // Constants
-const defaultTime = 1000 * 60 * 10; // 10 Minutes
+const defaultTime = 1000 * 60 * 1; // 1 Minute
 
 export default class Timer {
   timems = 0;      // The time in milliseconds
   interval = null; // The interval returned by setInterval
   period = 10;     // The period of the timer in milliseconds
-   
+  timeupCallback = function () {}
 
   constructor(startTime = defaultTime) {
     this.timems = startTime;
@@ -31,7 +31,8 @@ export default class Timer {
   decrementTime() {
     this.timems -= this.period;
     if (this.timems <= 0) {
-      this.reset();
+      this.timeupCallback();
+      this.pause();
       console.log('Time is up!');
     }
     
