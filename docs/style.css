@@ -78,3 +78,23 @@ nav {
   font-weight: bold;
   color: white;
 }
+
+
+
+.wild-message {
+  transition: opacity .3s;
+  font-size: 10em;
+  color: red;
+  font-weight: bold;
+  position: absolute;
+  left: 30%;
+  top: 30%;
+  rotate: 45deg;
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
+  color: blue;
+}

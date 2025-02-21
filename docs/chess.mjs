@@ -13,7 +13,7 @@ const wrongSound = new Audio('./audio/wrong.mp3');
 const endSong = new Audio('./audio/turn_down_for_what.mp3');
 const whitesTimeHTML = document.getElementById('whites-time');
 const blacksTimeHTML = document.getElementById('blacks-time');
-
+const gameOverMessage = document.getElementById('game-over-message');
 
 
 // State Machine
@@ -40,6 +40,7 @@ const Chess = {
     endSong.pause();
     endSong.currentTime = 0;
     Chess.Timers.reset();
+    gameOverMessage.classList.add('hidden');
     setInterval(() => {
       whitesTimeHTML.innerHTML = Chess.whitesTimer.to_string();
       blacksTimeHTML.innerHTML = Chess.blacksTimer.to_string();
@@ -171,6 +172,7 @@ const Chess = {
   gameOver() {
     Chess.Timers.pause();
     Chess.state = State.GAME_OVER;
+    gameOverMessage.classList.remove('hidden');
     console.log('GAME OVER!');
     endSong.play();
   },

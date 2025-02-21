@@ -5,7 +5,7 @@ const defaultTime = 1000 * 60 * 1; // 1 Minute
 export default class Timer {
   timems = 0;      // The time in milliseconds
   interval = null; // The interval returned by setInterval
-  period = 10;     // The period of the timer in milliseconds
+  period = 100;     // The period of the timer in milliseconds
   timeupCallback = function () {}
 
   constructor(startTime = defaultTime) {
