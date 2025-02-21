@@ -2,6 +2,10 @@
   --move-duration: 400ms;
 }
 
+h1 {
+  text-align: center;
+}
+
 .chessboard {
   display: grid;
   /* background-color: brown; */
@@ -44,17 +48,23 @@
 }
 
 nav {
+  display: flex;
   background-color: lightgray;
   color: black;
-  min-height: 4em;
+  min-height: 2em;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  margin: 5px;
 }
 
 #player-turn {
   font-size: 5em;
 }
 
-.flex {
+.center {
   display: flex;
+  justify-content: center;
 }
 
 .flex-column {
