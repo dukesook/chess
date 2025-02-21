@@ -4,6 +4,8 @@ import Utility from './Utility.mjs';
 
 const blacksTurn = document.getElementById('blacks-turn');
 const whitesTurn = document.getElementById('whites-turn');
+const whitesTime = document.getElementById('whites-time');
+const blacksTime = document.getElementById('blacks-time');
 const rootStyle = getComputedStyle(document.documentElement);
 const moveDuration = parseFloat(rootStyle.getPropertyValue('--move-duration'));
 
@@ -111,12 +113,16 @@ export const ChessGui = {
 
   displayWhitesTurn() {
     whitesTurn.classList.add('player-turn-active');
+    whitesTime.classList.add('player-turn-active');
     blacksTurn.classList.remove('player-turn-active');
+    blacksTime.classList.remove('player-turn-active');
   },
 
   displayBlacksTurn() {
     blacksTurn.classList.add('player-turn-active');
+    blacksTime.classList.add('player-turn-active');
     whitesTurn.classList.remove('player-turn-active');
+    whitesTime.classList.remove('player-turn-active');
   }
 }
 

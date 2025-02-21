@@ -63,13 +63,13 @@ nav {
 }
 
 .player-turn {
-  font-size: 3em;
+  font-size: 2.5em;
   /* border: 1px solid black; */
   padding: 10px;
   margin: 10px;
   width: 200px;
   text-align: center;
-  color: rgb(199, 199, 199);
+  color: rgb(173, 172, 172);
   background-color: lightgray;
 }
 
