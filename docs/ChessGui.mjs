@@ -101,6 +101,16 @@ export const ChessGui = {
     }, moveDuration);
   },
 
+  promotePawn(square) {
+    Utility.must_be(square, BoardSquare);
+    const piece = square.piece;
+    const color = piece.color;
+    const srcElement = ChessGui.createPiece('queen', color);
+    srcElement.alt = `${color} queen`;
+    square.container.innerHTML = '';
+    square.container.appendChild(srcElement);
+  },
+
   highlightSquare(square) {
     BoardSquare.must_be(square);
     square.container.classList.add('highlight-square');

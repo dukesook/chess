@@ -89,6 +89,11 @@ export default class ChessBoard {
       this.kingCaptured = true;
     }
 
+    // Promote Pawn
+    if (from.piece instanceof Pawn && (to.row == 0 || to.row == 7)) {
+      from.piece = new Queen(from.piece.color);
+    }
+
     // Update Controller
     from.piece.hasMoved = true;
     to.piece = from.piece;

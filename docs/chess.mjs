@@ -105,6 +105,7 @@ const Chess = {
     try {
 
       // Move Piece
+      const originalName = fromSquare.piece.get_name();
       Chess.board.move_piece(fromSquare, toSquare); // throws error if invalid
       Chess.board.print();
 
@@ -113,7 +114,12 @@ const Chess = {
 
       // Update Gui
       Gui.movePiece(fromSquare.container, toSquare.container);
-  
+
+      // Pawn Promotion
+      if (originalName == 'pawn' && toSquare.piece.get_name() == 'queen') {
+        Gui.promotePawn(toSquare);
+      }
+
       // Update State
       let gameOver = Chess.board.kingCaptured;
       if (gameOver) {
