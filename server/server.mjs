@@ -16,9 +16,21 @@ const io = new Server(httpServer, {/* options */}); // allows the HTTP server to
 app.use(express.static(path.join(process.cwd(), '../public')));
 
 
+let whitePlayer = null;
+let blackPlayer = null;
+
 // WebSocket connection
 io.on('connection', (socket) => {
     console.log('A user connected');
+    console.log('whitePlayer: ' + whitePlayer);
+    console.log('blackPlayer: ' + blackPlayer);
+    if (whitePlayer) {
+        blackPlayer = socket;
+        io.emit('message', 'black player connected');
+    } else {
+        whitePlayer = socket;
+        io.emit('message', 'white player connected');
+    }
 })
 
 

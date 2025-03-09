@@ -7,6 +7,10 @@ console.log('loading chess.mjs');
 
 //************************************************* */
 const socket = io(); // Connect to WebSocket server
+
+socket.on('message', (message) => {
+    console.log('server: ' + message);
+})
 //************************************************* */
 
 // HTML Elements
