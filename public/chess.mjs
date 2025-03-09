@@ -5,6 +5,11 @@ import { PieceColor } from './Pieces.mjs';
 import Timer from './Timer.mjs';
 console.log('loading chess.mjs');
 
+//************************************************* */
+const socket = io(); // Connect to WebSocket server
+//************************************************* */
+
+// HTML Elements
 const chessboardHTML = document.getElementById('chessboard');
 const resetButton = document.getElementById('reset-button');
 const endButton = document.getElementById('end-button');
