@@ -9,7 +9,16 @@ console.log('loading chess.mjs');
 const socket = io(); // Connect to WebSocket server
 
 socket.on('message', (message) => {
-    console.log('server: ' + message);
+  console.log('server: ' + message);
+})
+
+let playerColor = null;
+socket.on('playerColor', (color) => {
+  console.log('the server assigned me to be: ' + color);
+  playerColor = color;
+  if (color != 'white' && color != 'black') {
+    console.error('Invalid player color: ' + color);
+  }
 })
 //************************************************* */
 

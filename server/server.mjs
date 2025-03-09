@@ -21,15 +21,14 @@ let blackPlayer = null;
 
 // WebSocket connection
 io.on('connection', (socket) => {
-    console.log('A user connected');
-    console.log('whitePlayer: ' + whitePlayer);
-    console.log('blackPlayer: ' + blackPlayer);
-    if (whitePlayer) {
-        blackPlayer = socket;
-        io.emit('message', 'black player connected');
-    } else {
+    if (!whitePlayer) {
         whitePlayer = socket;
-        io.emit('message', 'white player connected');
+        socket.emit('playerColor', 'white');
+        console.log('assigned white');
+    } else {
+        blackPlayer = socket;
+        socket.emit('playerColor', 'black');
+        console.log('assigned black');
     }
 })
 
