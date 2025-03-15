@@ -1,7 +1,7 @@
 import ChessBoard from './ChessBoard.mjs';
 import BoardSquare from './BoardSquare.mjs';
 import Gui from './ChessGui.mjs';
-import { PieceColor } from './Pieces.mjs';
+import { PieceColor } from './Piece.mjs';
 import Timer from './Timer.mjs';
 console.log('loading chess.mjs');
 
@@ -19,6 +19,15 @@ socket.on('playerColor', (color) => {
   if (color != 'white' && color != 'black') {
     console.error('Invalid player color: ' + color);
   }
+})
+
+socket.on('forceMove', (from, to) => {
+  console.log('forceMove: ');
+  from = BoardSquare.object_constructor(from);
+  to = BoardSquare.object_constructor(to);
+
+  Chess.forceMovePiece(from, to);
+
 })
 //************************************************* */
 
@@ -120,46 +129,52 @@ const Chess = {
     BoardSquare.must_be(toSquare);
     BoardSquare.must_be(fromSquare);
     
-    try {
-
-      // Move Piece
-      const originalName = fromSquare.piece.get_name();
-      Chess.board.move_piece(fromSquare, toSquare); // throws error if invalid
-      Chess.board.print();
-
-      // Play Sound
-      moveSound.play();
-
-      // Update Gui
-      Gui.movePiece(fromSquare.container, toSquare.container);
-
-      // Pawn Promotion
-      if (originalName == 'pawn' && toSquare.piece.get_name() == 'queen') {
-        Gui.promotePawn(toSquare);
-      }
-
-      // Update State
-      let gameOver = Chess.board.kingCaptured;
-      if (gameOver) {
-        Chess.setState(State.GAME_OVER);
-      }
-      else {
-        const nextState = Chess.getNextState();
-        Chess.setState(nextState);
-      }
-
+    const isValidMove = Chess.board.is_valid_move(fromSquare, toSquare);
+    if (isValidMove) {
+      console.log('emmiting move:')
+      socket.emit('moveAttempt', fromSquare, toSquare);
     }
-    catch (e) {
+    else if (!isValidMove) {
       console.error(e);
       Chess.resetPlayerTurn(playerColor);
       wrongSound.play();
     }
 
-
     Gui.unhighlightSquare(fromSquare);
 
   },
 
+  forceMovePiece(fromSquare, toSquare) {
+    BoardSquare.must_be(toSquare);
+    BoardSquare.must_be(fromSquare);
+
+    const originalName = fromSquare.piece.get_name();
+    Chess.board.move_piece(fromSquare, toSquare); // throws error if invalid
+    Chess.board.print();
+
+    // Play Sound
+    moveSound.play();
+
+    // Update Gui
+    Gui.movePiece(fromSquare.container, toSquare.container);
+
+    // Pawn Promotion
+    if (originalName == 'pawn' && toSquare.piece.get_name() == 'queen') {
+      Gui.promotePawn(toSquare);
+    }
+
+    // Update State
+    let gameOver = Chess.board.kingCaptured;
+    if (gameOver) {
+      Chess.setState(State.GAME_OVER);
+    }
+    else {
+      const nextState = Chess.getNextState();
+      Chess.setState(nextState);
+    }
+
+
+  },
 
   resetPlayerTurn(playerColor) {
     if (playerColor == PieceColor.WHITE) {

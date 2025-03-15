@@ -6,6 +6,7 @@ import express from 'express'; // $ npm install express
 import { Server } from 'socket.io'; // $ npm install socket.io
 import { createServer } from 'http';
 import path from 'path';
+import BoardSquare from '../public/BoardSquare.mjs';
 
 const PORT = 3000;
 const app = express(); // Express does not create an HTTP server. Express simplifies is middleware & simplifies handling routes
@@ -19,6 +20,7 @@ app.use(express.static(path.join(process.cwd(), '../public')));
 let whitePlayer = null;
 let blackPlayer = null;
 
+
 // WebSocket connection
 io.on('connection', (socket) => {
     if (!whitePlayer) {
@@ -30,7 +32,24 @@ io.on('connection', (socket) => {
         socket.emit('playerColor', 'black');
         console.log('assigned black');
     }
+
+    socket.on('message', (message) => {
+        console.log('client: ' + message);
+        io.emit('message', message);
+    });
+
+    socket.on('moveAttempt', (from, to) => {
+        from = BoardSquare.object_constructor(from);
+        to = BoardSquare.object_constructor(to);
+        console.log(from);
+        console.log('move: ' + from + ' to ' + to);
+        io.emit('forceMove', from, to);
+    });
 })
+
+
+
+
 
 
 // NOT app.listen()

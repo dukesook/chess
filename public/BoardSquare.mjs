@@ -1,12 +1,26 @@
+import PieceInterface from "./Piece.mjs";
+
 export default class BoardSquare {
-  piece = null;
-  row = null;
-  column = null;
+  piece = null;     // PeiceInterface
+  row = null;       // Integer
+  column = null;    // Integer
   container = null; // HTML Element
 
   constructor(row, column) {
     this.row = row;
     this.column = column;
+  }
+
+  static object_constructor(object) {
+    // Creates a BoardSquare from the given object.
+    // The object was originally a BoardSquare, but sent over the network as a plain object.
+
+    const square = new BoardSquare(object.row, object.column);
+    square.piece = PieceInterface.object_constructor(object.piece);
+    for (let key in object) {
+      square[key] = object[key];
+    }
+    return square;
   }
 
   static must_be(object, pieceStatus = null) {

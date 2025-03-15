@@ -17,13 +17,15 @@ export const PieceColor = Object.freeze({
 export default class PeiceInterface {
   points = null;
   color = null;
+  short_name = null;
   WHITE = PieceColor.WHITE;
   BLACK = PieceColor.BLACK;
 
-  constructor(color) {
+  constructor(color, short_name) {
     
     PieceColor.must_be(color);
     this.color = color;
+    this.short_name = short_name;
 
 
     // Prohibit Abstract class Instantiation
@@ -33,8 +35,16 @@ export default class PeiceInterface {
 
     // Validate Children
     // TODO: add 'getValidMoves' to requiredMethods
-    const requiredMethods = ['isValidMove', 'get_name', 'get_short_name'];
+    const requiredMethods = ['isValidMove', 'get_name'];
     this.must_implement(requiredMethods);
+  }
+
+  static object_constructor(object) {
+    console.log('Piece: object_constructor: ' + object);
+
+    for (let key in object) {
+    }
+    console.log(object);
   }
 
   must_implement(requiredMethods) {
@@ -48,10 +58,6 @@ export default class PeiceInterface {
 
   isValidMove() {
     throw new Error('isValidMove() Not Overridden');
-  };
-
-  get_short_name() {
-    throw new Error('get_short_name() Not Overridden');
   };
 
   getValidMoves() {
@@ -104,11 +110,7 @@ export class Pawn extends PeiceInterface {
   hasMoved = false;
 
   constructor(color) {
-    super(color);
-  }
-
-  get_short_name() {
-    return 'P';
+    super(color, 'P');
   }
 
   get_name() {
@@ -207,11 +209,7 @@ export class Rook extends PeiceInterface {
   points = 5;
 
   constructor(color) {
-    super(color);
-  }
-
-  get_short_name() {
-    return 'R';
+    super(color, 'R');
   }
 
   get_name() {
@@ -274,11 +272,7 @@ export class Bishop extends PeiceInterface {
   
 
   constructor(color) {
-    super(color);
-  }
-
-  get_short_name() {
-    return 'B';
+    super(color, 'B');
   }
 
   get_name() {
@@ -337,11 +331,7 @@ export class Knight extends PeiceInterface {
   points = 3;
 
   constructor(color) {
-    super(color);
-  }
-
-  get_short_name() {
-    return 'N';
+    super(color, 'N');
   }
 
   get_name() {
@@ -398,13 +388,9 @@ export class Queen extends PeiceInterface {
   points = 9;
 
   constructor(color) {
-    super(color);
+    super(color, 'Q');
   }
 
-  get_short_name() {
-    return 'Q';
-  }
-  
   get_name() {
     return 'queen';
   }
@@ -449,12 +435,9 @@ export class King extends PeiceInterface {
   points = 0;
 
   constructor(color) {
-    super(color);
+    super(color, 'K');
   }
 
-  get_short_name() {
-    return 'K';
-  }
 
   get_name() {
     return 'king';

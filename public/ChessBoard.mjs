@@ -1,4 +1,4 @@
-import { Pawn, Rook, Bishop, Knight, King, Queen, PieceColor } from './Pieces.mjs';
+import { Pawn, Rook, Bishop, Knight, King, Queen, PieceColor } from './Piece.mjs';
 import BoardSquare from './BoardSquare.mjs';
 export default class ChessBoard {
   // Declare a 2d array of Board Squares
@@ -68,6 +68,20 @@ export default class ChessBoard {
     return this.board[row][col];
   }
 
+  is_valid_move(from, to) {
+    BoardSquare.must_be(from, 'occupied');
+    BoardSquare.must_be(to);
+
+    // Friendly Capture
+    if (to.piece && to.piece.color == from.piece.color) {
+      console.log('You can\'t kill your own piece');
+      return false;
+    }
+
+    const isValidMove = from.piece.isValidMove(this, from, to);
+    return isValidMove;
+  }
+
   move_piece(from, to) {
     BoardSquare.must_be(from, 'occupied');
     BoardSquare.must_be(to);
@@ -109,7 +123,7 @@ export default class ChessBoard {
         const square = this.board[row][col];
         const piece = square.piece;
         if (piece) {
-          output += piece.get_short_name() + ' ';
+          output += piece.short_name + ' ';
         }
         else {
           output += '- ';

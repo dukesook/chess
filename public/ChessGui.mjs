@@ -65,7 +65,7 @@ export const ChessGui = {
         BoardSquare.must_be(square);
         const piece = square.piece;
         if (piece) {
-          const shortName = piece.get_short_name();
+          const shortName = piece.short_name;
 
         }
       }
