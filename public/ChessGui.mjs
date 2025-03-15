@@ -44,7 +44,7 @@ export const ChessGui = {
 
         if (square.piece) {
           const color = square.piece.color;
-          const type = square.piece.get_name();
+          const type = square.piece.name;
           const srcElement = ChessGui.createPiece(type, color);
           srcElement.alt = `${color} ${type}`;
           squareElement.appendChild(srcElement);

@@ -148,7 +148,7 @@ const Chess = {
     BoardSquare.must_be(toSquare);
     BoardSquare.must_be(fromSquare);
 
-    const originalName = fromSquare.piece.get_name();
+    const originalName = fromSquare.piece.name;
     Chess.board.move_piece(fromSquare, toSquare); // throws error if invalid
     Chess.board.print();
 
@@ -159,7 +159,7 @@ const Chess = {
     Gui.movePiece(fromSquare.container, toSquare.container);
 
     // Pawn Promotion
-    if (originalName == 'pawn' && toSquare.piece.get_name() == 'queen') {
+    if (originalName == 'pawn' && toSquare.piece.name == 'queen') {
       Gui.promotePawn(toSquare);
     }
 

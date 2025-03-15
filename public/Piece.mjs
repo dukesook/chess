@@ -17,16 +17,17 @@ export const PieceColor = Object.freeze({
 export default class PeiceInterface {
   points = null;
   color = null;
-  short_name = null;
+  short_name = null; // P, B, N, R, Q, K
+  name = null; // pawn, bishop, knight, rook, queen, king
   WHITE = PieceColor.WHITE;
   BLACK = PieceColor.BLACK;
 
-  constructor(color, short_name) {
+  constructor(color, short_name, name) {
     
     PieceColor.must_be(color);
     this.color = color;
     this.short_name = short_name;
-
+    this.name = name;
 
     // Prohibit Abstract class Instantiation
     if (new.target === PeiceInterface) {
@@ -35,7 +36,7 @@ export default class PeiceInterface {
 
     // Validate Children
     // TODO: add 'getValidMoves' to requiredMethods
-    const requiredMethods = ['isValidMove', 'get_name'];
+    const requiredMethods = ['isValidMove'];
     this.must_implement(requiredMethods);
   }
 
@@ -82,7 +83,7 @@ export default class PeiceInterface {
       col += colDirection;
       const square = board.board[row][col];
       if (square.piece) {
-        console.error('Path not clear: ' + row + ', ' + col, ' have a ', square.piece.get_name());
+        console.error('Path not clear: ' + row + ', ' + col, ' have a ', square.piece.name);
         return false;
       }
     }
@@ -110,11 +111,7 @@ export class Pawn extends PeiceInterface {
   hasMoved = false;
 
   constructor(color) {
-    super(color, 'P');
-  }
-
-  get_name() {
-    return 'pawn';
+    super(color, 'P', 'pawn');
   }
 
   getDirection() {
@@ -209,11 +206,7 @@ export class Rook extends PeiceInterface {
   points = 5;
 
   constructor(color) {
-    super(color, 'R');
-  }
-
-  get_name() {
-    return 'rook';
+    super(color, 'R', 'rook');
   }
 
   isValidMove (board, from, to) {
@@ -272,11 +265,7 @@ export class Bishop extends PeiceInterface {
   
 
   constructor(color) {
-    super(color, 'B');
-  }
-
-  get_name() {
-    return 'bishop';
+    super(color, 'B', 'bishop');
   }
 
   isValidMove (board, from, to) {
@@ -331,11 +320,7 @@ export class Knight extends PeiceInterface {
   points = 3;
 
   constructor(color) {
-    super(color, 'N');
-  }
-
-  get_name() {
-    return 'knight';
+    super(color, 'N', 'knight');
   }
 
   isValidMove (board, from, to) {
@@ -388,11 +373,7 @@ export class Queen extends PeiceInterface {
   points = 9;
 
   constructor(color) {
-    super(color, 'Q');
-  }
-
-  get_name() {
-    return 'queen';
+    super(color, 'Q', 'queen');
   }
 
   isValidMove (board, from, to) {
@@ -435,12 +416,7 @@ export class King extends PeiceInterface {
   points = 0;
 
   constructor(color) {
-    super(color, 'K');
-  }
-
-
-  get_name() {
-    return 'king';
+    super(color, 'K', 'king');
   }
 
   isValidMove (board, from, to) {
