@@ -13,10 +13,9 @@ socket.on('message', (message) => {
   console.log('server: ' + message);
 })
 
-let playerColor = null;
 socket.on('playerColor', (color) => {
   console.log('the server assigned me to be: ' + color);
-  playerColor = color;
+  Gui.displayPlayerColor(color);
   if (color != 'white' && color != 'black') {
     console.error('Invalid player color: ' + color);
   }
@@ -103,6 +102,7 @@ const Chess = {
 
 
   handlePlayersTurn: function(square, playerColor) {
+    // The player selected the piece they would like to move
     BoardSquare.must_be(square);
 
     // Select Square with Piece
@@ -122,12 +122,17 @@ const Chess = {
     // Success
     Chess.selectedSquare = square;
     Gui.highlightSquare(square);
-    Chess.state = Chess.getNextState();
+    if (playerColor == PieceColor.WHITE) {
+      Chess.setState(State.WHITE_MOVING);
+    } else {
+      Chess.setState(State.BLACK_MOVING);
+    }
 
   },
 
 
   handlePlayerMoving: function(toSquare, playerColor) {
+    // The player selected the destination square for their piece
     const fromSquare = Chess.selectedSquare;
     BoardSquare.must_be(toSquare);
     BoardSquare.must_be(fromSquare);
@@ -148,10 +153,11 @@ const Chess = {
   },
 
   forceMovePiece(fromSquare, toSquare) {
+    BoardSquare.must_be(fromSquare, 'occupied');
     BoardSquare.must_be(toSquare);
-    BoardSquare.must_be(fromSquare);
 
     const originalName = fromSquare.piece.name;
+    const playerColor = fromSquare.piece.color;
     Chess.board.move_piece(fromSquare, toSquare); // throws error if invalid
     Chess.board.print();
 
@@ -172,8 +178,13 @@ const Chess = {
       Chess.setState(State.GAME_OVER);
     }
     else {
-      const nextState = Chess.getNextState();
-      Chess.setState(nextState);
+      if (playerColor == PieceColor.WHITE) {
+        Chess.setState(State.BLACKS_TURN);
+      } else if (playerColor == PieceColor.BLACK) {
+        Chess.setState(State.WHITES_TURN);
+      } else {
+        throw error('unknown color: ', playerColor);
+      }
     }
 
 
@@ -192,17 +203,21 @@ const Chess = {
   setState(state) {
     Chess.state = state;
     if (state == State.WHITES_TURN) {
+      console.log('State: Whites Turn');
       Gui.displayWhitesTurn(PieceColor.WHITE);
       Chess.Timers.startWhite();
     }
     else if (state == State.WHITE_MOVING) {
+      console.log('State: Whites Moving');
       Gui.displayWhitesTurn(PieceColor.WHITE);
     }
     else if (state == State.BLACKS_TURN) {
+      console.log('State: Blacks Turn');
       Gui.displayBlacksTurn(PieceColor.BLACK);
       Chess.Timers.startBlack();
     }
     else if (state == State.BLACK_MOVING) {
+      console.log('State: Black Moving');
       Gui.displayBlacksTurn(PieceColor.BLACK);
     }
     else if (state == State.GAME_OVER) {
@@ -217,23 +232,6 @@ const Chess = {
     gameOverMessage.classList.remove('hidden');
     console.log('GAME OVER!');
     endSong.play();
-  },
-
-
-  getNextState: function() {
-    const state = Chess.state;
-    if (state == State.WHITES_TURN) {
-      return State.WHITE_MOVING;
-    }
-    else if (state == State.WHITE_MOVING) {
-      return State.BLACKS_TURN;
-    }
-    else if (state == State.BLACKS_TURN) {
-      return State.BLACK_MOVING;
-    }
-    else if (state == State.BLACK_MOVING) {
-      return State.WHITES_TURN;
-    }
   },
 
   Timers: {
@@ -269,6 +267,22 @@ const Chess = {
 Chess.init();
 resetButton.onclick = Chess.init;
 endButton.onclick = Chess.gameOver;
+
+
+const debug = {
+  print_state() {
+    const state = Chess.state;
+    if (state == State.WHITES_TURN) {
+      console.log('State: Whites Turns');
+    } else if (state == State.WHITE_MOVING) {
+      console.log('State: White Moving');
+    } else if (state == State.BLACKS_TURN) {
+      console.log('State: Blacks Turn');
+    } else if (state == State.BLACK_MOVING) {
+      console.log('State: Black moving');
+    }
+  }
+}
 
 
 export default Chess;

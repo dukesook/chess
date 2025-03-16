@@ -1,6 +1,6 @@
 
 // Constants
-const defaultTime = 1000 * 30; // 30 seconds
+const defaultTime = 1000 * 60 * 5; // 5 minutes
 
 export default class Timer {
   timems = 0;      // The time in milliseconds

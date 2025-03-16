@@ -70,6 +70,8 @@ io.on('connection', (socket) => {
             blackPlayer = null;
             console.log('black disconnected');
         }
+        // TODO: End Game
+        whitesTurn = true;
     })
 })
 
