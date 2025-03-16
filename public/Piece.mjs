@@ -41,11 +41,31 @@ export default class PeiceInterface {
   }
 
   static object_constructor(object) {
-    console.log('Piece: object_constructor: ' + object);
-
-    for (let key in object) {
+    if (!object) {
+      return null;
     }
-    console.log(object);
+    const name = object.name;
+    const color = object.color;
+    let piece = null;
+    if (name == 'pawn') {
+      piece = new Pawn(color);
+    } else if (name == 'rook') {
+      piece = new Rook(color);
+    } else if (name == 'bishop') {
+      piece = new Bishop(color);
+    } else if (name == 'knight') {
+      piece = new Knight(color);
+    } else if (name == 'queen') {
+      piece = new Queen(color);
+    } else if (name == 'king') {
+      piece = new King(color);
+    } else {
+      throw new Error('Invalid piece name: ' + name);
+    }
+    for (let key in object) {
+      piece[key] = object[key];
+    }
+    return piece;
   }
 
   must_implement(requiredMethods) {

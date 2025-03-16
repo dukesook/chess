@@ -39,11 +39,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('moveAttempt', (from, to) => {
+        console.log('received moveAttempt');
         from = BoardSquare.object_constructor(from);
         to = BoardSquare.object_constructor(to);
-        console.log(from);
-        console.log('move: ' + from + ' to ' + to);
         io.emit('forceMove', from, to);
+        console.log('emit forceMove');
     });
 })
 

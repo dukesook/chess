@@ -3,6 +3,7 @@ import BoardSquare from './BoardSquare.mjs';
 import Gui from './ChessGui.mjs';
 import { PieceColor } from './Piece.mjs';
 import Timer from './Timer.mjs';
+import Utility from './Utility.mjs';
 console.log('loading chess.mjs');
 
 //************************************************* */
@@ -22,9 +23,11 @@ socket.on('playerColor', (color) => {
 })
 
 socket.on('forceMove', (from, to) => {
+  Utility.must_be(Chess.board, ChessBoard);
+
   console.log('forceMove: ');
-  from = BoardSquare.object_constructor(from);
-  to = BoardSquare.object_constructor(to);
+  from = Chess.board.getSquare(from.row, from.column);
+  to = Chess.board.getSquare(to.row, to.column);
 
   Chess.forceMovePiece(from, to);
 
