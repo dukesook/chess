@@ -19,7 +19,7 @@ app.use(express.static(path.join(process.cwd(), '../public')));
 
 let whitePlayer = null;
 let blackPlayer = null;
-
+let whitesTurn = true;
 
 // WebSocket connection
 io.on('connection', (socket) => {
@@ -44,6 +44,18 @@ io.on('connection', (socket) => {
 
     socket.on('moveAttempt', (from, to) => {
         console.log('received moveAttempt');
+        console.log('whitesTurn: ' + whitesTurn);
+        if (whitesTurn && socket == blackPlayer) {
+            console.log('Black tried to move on whites turn.');
+            socket.emit('message', 'It is not your turn, blacker.');
+            return;
+        } else if (!whitesTurn && socket == whitePlayer) {
+            console.log('White tried to move on blacks turn.')
+            socket.emit('message', 'White tried to move on blacks turn.');
+            return;
+        }
+        
+        whitesTurn = !whitesTurn;
         from = BoardSquare.object_constructor(from);
         to = BoardSquare.object_constructor(to);
         io.emit('forceMove', from, to);
