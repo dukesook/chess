@@ -27,10 +27,14 @@ io.on('connection', (socket) => {
         whitePlayer = socket;
         socket.emit('playerColor', 'white');
         console.log('assigned white');
-    } else {
+    } else if (!blackPlayer) {
         blackPlayer = socket;
         socket.emit('playerColor', 'black');
         console.log('assigned black');
+    } else {
+        socket.emit('message', 'Sorry, the game is full.');
+        socket.disconnect();
+        console.log('game is full');
     }
 
     socket.on('message', (message) => {
@@ -45,6 +49,16 @@ io.on('connection', (socket) => {
         io.emit('forceMove', from, to);
         console.log('emit forceMove');
     });
+
+    socket.on('disconnect', () => {
+        if (whitePlayer == socket) {
+            whitePlayer = null;
+            console.log('white disconnected');
+        } else if (blackPlayer == socket) {
+            blackPlayer = null;
+            console.log('black disconnected');
+        }
+    })
 })
 
 
