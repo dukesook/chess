@@ -7,6 +7,7 @@ const whitesTurn = document.getElementById('whites-turn');
 const whitesTime = document.getElementById('whites-time');
 const blacksTime = document.getElementById('blacks-time');
 const playerColor = document.getElementById('player-color');
+const stateElement = document.getElementById('state');
 const rootStyle = getComputedStyle(document.documentElement);
 const moveDuration = parseFloat(rootStyle.getPropertyValue('--move-duration'));
 
@@ -139,6 +140,11 @@ export const ChessGui = {
   displayPlayerColor(color) {
     Utility.must_be_string(color);
     playerColor.textContent = "Player: " + color;
+  },
+
+  displayState(state) {
+    Utility.must_be_string(state);
+    stateElement.textContent = "state: " + state;
   }
 }
 

@@ -52,6 +52,19 @@ const State = Object.freeze({
   BLACKS_TURN: 3,
   BLACK_MOVING: 4,
   GAME_OVER: 5,
+  to_string: function(state) {
+    if (state == State.WHITES_TURN) {
+      return 'WHITES_TURN';
+    } else if (state == State.WHITE_MOVING) {
+      return 'WHITE_MOVING';
+    } else if (state == State.BLACKS_TURN) {
+      return 'BLACKS_TURN';
+    } else if (state == State.BLACK_MOVING) {
+      return 'BLACK_MOVING';
+    } else if (state == State.GAME_OVER) {
+      return 'GAME_OVER';
+    }
+  }
 })
 
 const Chess = {
@@ -202,6 +215,7 @@ const Chess = {
 
   setState(state) {
     Chess.state = state;
+    Gui.displayState(State.to_string(state));
     if (state == State.WHITES_TURN) {
       console.log('State: Whites Turn');
       Gui.displayWhitesTurn(PieceColor.WHITE);
