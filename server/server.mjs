@@ -63,6 +63,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
+        console.log('socket.on(disconnect)')
         if (whitePlayer == socket) {
             whitePlayer = null;
             console.log('white disconnected');
@@ -70,7 +71,7 @@ io.on('connection', (socket) => {
             blackPlayer = null;
             console.log('black disconnected');
         }
-        // TODO: End Game
+        io.emit('resetGame');
         whitesTurn = true;
     })
 })

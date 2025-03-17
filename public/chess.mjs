@@ -19,6 +19,7 @@ socket.on('playerColor', (color) => {
   if (color != 'white' && color != 'black') {
     console.error('Invalid player color: ' + color);
   }
+  Chess.playerColor = color;
 })
 
 socket.on('forceMove', (from, to) => {
@@ -31,9 +32,15 @@ socket.on('forceMove', (from, to) => {
   Chess.forceMovePiece(from, to);
 
 })
+
+socket.on('resetGame', () => {
+  Chess.init();
+  console.log('resetGame');
+})
 //************************************************* */
 
 // HTML Elements
+
 const chessboardHTML = document.getElementById('chessboard');
 const resetButton = document.getElementById('reset-button');
 const endButton = document.getElementById('end-button');
@@ -70,6 +77,7 @@ const State = Object.freeze({
 const Chess = {
   board: null, // class ChessBoard
   selectedSquare: null, // The square with the piece that player has selected to move
+  playerColor: null, // This client represents 1 player, (either black or white)
   state: State.WHITES_TURN,
   whitesTimer: new Timer(),
   blacksTimer: new Timer(),
@@ -94,7 +102,6 @@ const Chess = {
   onclickSquare: function(square) {
     BoardSquare.must_be(square);
 
-    Chess.Timers.debug();
     const state = Chess.state;
     if (state == State.WHITES_TURN) {
       Chess.handlePlayersTurn(square, PieceColor.WHITE); // White Selected Their Piece to Move
@@ -103,7 +110,7 @@ const Chess = {
       Chess.handlePlayerMoving(square, PieceColor.WHITE); // White selected a destination for their piece
     }
     else if (state == State.BLACKS_TURN) {
-      Chess.handlePlayersTurn(square, 'black'); // Black Selected Their Piece to Move
+      Chess.handlePlayersTurn(square, PieceColor.BLACK); // Black Selected Their Piece to Move
     }
     else if (state == State.BLACK_MOVING) {
       Chess.handlePlayerMoving(square, PieceColor.BLACK); // Black selected a destination for their peice
@@ -114,7 +121,7 @@ const Chess = {
   },
 
 
-  handlePlayersTurn: function(square, playerColor) {
+  handlePlayersTurn: function(square, playerToMove) {
     // The player selected the piece they would like to move
     BoardSquare.must_be(square);
 
@@ -127,15 +134,22 @@ const Chess = {
 
     // Select Team piece
     const color = piece.color;
-    if (color != playerColor) {
+    if (color != Chess.playerColor) {
       console.log('You must select your own pieces');
+      return;
+    }
+
+    // Must be your Turn
+    const playerColor = Chess.playerColor;
+    if (playerToMove != playerColor) {
+      console.log('Not your turn: It\s ' + playerToMove + 's turn');
       return;
     }
 
     // Success
     Chess.selectedSquare = square;
     Gui.highlightSquare(square);
-    if (playerColor == PieceColor.WHITE) {
+    if (playerToMove == PieceColor.WHITE) {
       Chess.setState(State.WHITE_MOVING);
     } else {
       Chess.setState(State.BLACK_MOVING);
@@ -156,7 +170,7 @@ const Chess = {
       socket.emit('moveAttempt', fromSquare, toSquare);
     }
     else if (!isValidMove) {
-      console.error(e);
+      console.error('invalid move!');
       Chess.resetPlayerTurn(playerColor);
       wrongSound.play();
     }

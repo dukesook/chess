@@ -59,6 +59,10 @@ nav {
   margin: 5px;
 }
 
+nav > * {
+  margin: 0 10px;
+}
+
 #player-turn {
   font-size: 5em;
 }
