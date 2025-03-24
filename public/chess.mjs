@@ -40,7 +40,6 @@ socket.on('resetGame', () => {
 //************************************************* */
 
 // HTML Elements
-
 const chessboardHTML = document.getElementById('chessboard');
 const resetButton = document.getElementById('reset-button');
 const endButton = document.getElementById('end-button');
@@ -90,6 +89,7 @@ const Chess = {
     endSong.pause();
     endSong.currentTime = 0;
     Chess.Timers.reset();
+    Chess.Timers.pause();
     gameOverMessage.classList.add('hidden');
     setInterval(() => {
       whitesTimeHTML.innerHTML = Chess.whitesTimer.to_string();
@@ -293,7 +293,9 @@ const Chess = {
 }
 
 Chess.init();
-resetButton.onclick = Chess.init;
+resetButton.onclick = function() {
+  socket.emit('resetGame');
+};
 endButton.onclick = Chess.gameOver;
 
 

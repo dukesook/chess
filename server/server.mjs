@@ -71,10 +71,18 @@ io.on('connection', (socket) => {
             blackPlayer = null;
             console.log('black disconnected');
         }
-        io.emit('resetGame');
-        whitesTurn = true;
+        resetGame();
     })
+
+    socket.on('resetGame', () => {
+        resetGame();
+    });
 })
+
+function resetGame() {
+    io.emit('resetGame');
+    whitesTurn = true;
+}
 
 
 
